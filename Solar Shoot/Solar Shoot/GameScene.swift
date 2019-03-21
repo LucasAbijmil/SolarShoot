@@ -27,9 +27,9 @@ let gameScoreString = gameScore.formattedWithSeparatorGameScene
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
     
-    /**********************************************************************************************************************************************************************************\
-     Declaration of general var
-     \**********************************************************************************************************************************************************************************/
+/***********************************************************************************************************************************************************************************\
+                                                                Declaration of general var
+\***********************************************************************************************************************************************************************************/
     
     let planet = SKSpriteNode(imageNamed: "Planet")
     let background = SKSpriteNode(imageNamed: "Background")
@@ -41,7 +41,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         case StopedGame // si le joueur fait pause
         case afterGame // après le niveau ––> gagné ou perdu
     }
-    var currentGameState = gameState.inGame //Ici on indique on fixe la valeur à inGame ; int = confusion
+    var currentGameState = gameState.preGame //Ici on indique on fixe la valeur à inGame ; int = confusion
     struct physicsCategories {
         static let none : UInt32 = 0
         static let planet : UInt32 = 0b1 // 1 en binaire
@@ -56,12 +56,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let planetLife = SKSpriteNode(imageNamed: "Planet")
     var pointLifeLabel = SKLabelNode(fontNamed: "Starjedi")
     var xPointLifeLabel = SKLabelNode(fontNamed: "Starjedi")
+    let tapToBeginLabel = SKLabelNode(fontNamed: "Starjedi")
     
-    
-    
-    /*******************************************************************************************************************************************************************************\
-     Declaration Game Area, Background, Planet
-     \*********************************************************************************************************************************************************************************/
+/***********************************************************************************************************************************************************************************\
+                                                        Declaration Game Area, Background, Planet
+\***********************************************************************************************************************************************************************************/
     
     let gameArea : CGRect
     override init (size : CGSize) {
@@ -87,7 +86,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.addChild(background)
         
         planet.setScale(0.55)
-        planet.position = CGPoint(x: self.size.width / 2, y: self.size.height / 7)
+        planet.position = CGPoint(x: self.size.width / 2, y: -planet.size.height)
         planet.zPosition = 2
         planet.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         //planet.physicsBody = SKPhysicsBody(rectangleOf: planet.size) // déclaration du contouring de la planète, demandé au prof pour le typede SKphysics
@@ -102,7 +101,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         gameScoreLabel.fontSize = 50
         gameScoreLabel.fontColor = SKColor.white
         gameScoreLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.left
-        gameScoreLabel.position = CGPoint(x: self.size.width * 0.20, y: self.size.height * 0.9)
+        gameScoreLabel.position = CGPoint(x: self.size.width * 0.20, y: self.size.height + gameScoreLabel.frame.size.height)
         gameScoreLabel.zPosition = 100
         self.addChild(gameScoreLabel)
         
@@ -110,7 +109,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         xPointLifeLabel.fontSize = 30
         xPointLifeLabel.fontColor = SKColor.white
         xPointLifeLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.right
-        xPointLifeLabel.position = CGPoint(x: self.size.width * 0.73, y: self.size.height * 0.9)
+        xPointLifeLabel.position = CGPoint(x: self.size.width * 0.73, y: self.size.height + xPointLifeLabel.frame.size.height)
         xPointLifeLabel.zPosition = 100
         self.addChild(xPointLifeLabel)
         
@@ -118,25 +117,44 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         pointLifeLabel.fontSize = 50
         pointLifeLabel.fontColor = SKColor.white
         pointLifeLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.right
-        pointLifeLabel.position = CGPoint(x: self.size.width * 0.75, y: self.size.height * 0.9)
+        pointLifeLabel.position = CGPoint(x: self.size.width * 0.75, y: self.size.height + pointLifeLabel.frame.size.height)
         pointLifeLabel.zPosition = 100
         self.addChild(pointLifeLabel)
         
         
         planetLife.setScale(0.15)
-        planetLife.position = CGPoint(x: self.size.width * 0.78, y: self.size.height * 0.9)
+        planetLife.position = CGPoint(x: self.size.width * 0.78, y: self.size.height + planetLife.frame.size.height)
         planetLife.zPosition = 100
         planetLife.anchorPoint = CGPoint(x: 0.5, y: 0.25) // y = 0.25 sinon pas bien aligné en y
         self.addChild(planetLife)
         
-        newLevel()
+        let moveToScreen = SKAction.moveTo(y: self.size.height*0.9, duration: 1.5)
+        gameScoreLabel.run(moveToScreen)
+        xPointLifeLabel.run(moveToScreen)
+        pointLifeLabel.run(moveToScreen)
+        planetLife.run(moveToScreen)
+        
+        tapToBeginLabel.text = "Appuyez pour commencer votre mission"
+        tapToBeginLabel.fontSize = 80
+        tapToBeginLabel.fontColor = SKColor.white
+        tapToBeginLabel.zPosition = 1
+        tapToBeginLabel.alpha = 0.7
+        tapToBeginLabel.position = CGPoint(x: self.size.width, y: self.size.height/2)
+        self.addChild(tapToBeginLabel)
+        
+        //fonctionne pas parfaitement
+        let scrollRightToLeft = SKAction.moveTo(x: -self.size.width, duration: 9)
+        let resetScroll = SKAction.moveTo(x: tapToBeginLabel.position.x, duration: 0)
+        let scrollSequence = SKAction.sequence([scrollRightToLeft, resetScroll])
+        let scrollSequenceRepeat = SKAction.repeat(scrollSequence, count: 99999999)
+        tapToBeginLabel.run(scrollSequenceRepeat)
         
         
     }
     
-    /***********************************************************************************************************************************************************************************\
-     Declaration Bullet, func FireBullet
-     \***********************************************************************************************************************************************************************************/
+/***********************************************************************************************************************************************************************************\
+                                                                Declaration Bullet, func FireBullet
+\***********************************************************************************************************************************************************************************/
     
     
     func fireBullet () {
@@ -162,14 +180,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if currentGameState == gameState.inGame {
+        if currentGameState == gameState.preGame {
+            gameStart()
+        }
+        else if currentGameState == gameState.inGame {
             fireBullet()
         }
     }
     
-    /***********************************************************************************************************************************************************************************\
-     Move Planet
-     \***********************************************************************************************************************************************************************************/
+/***********************************************************************************************************************************************************************************\
+                                                                        Move Planet
+\***********************************************************************************************************************************************************************************/
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         for touch : AnyObject in touches {
@@ -200,9 +221,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
-    /***********************************************************************************************************************************************************************************\
-     Declaration of function random (for asteroids spawn)
-     \***********************************************************************************************************************************************************************************/
+/***********************************************************************************************************************************************************************************\
+                                                            Declaration of function random (for asteroids spawn)
+\***********************************************************************************************************************************************************************************/
     func random() -> CGFloat {
         return CGFloat(Float(arc4random()) / 0xFFFFFFFF) //générer un nombre aléatoire
     }
@@ -211,9 +232,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         return random() * (max - min) + min
     }
     
-    /***********************************************************************************************************************************************************************************\
-     Declaration of asteroids and new level
-     \***********************************************************************************************************************************************************************************/
+/***********************************************************************************************************************************************************************************\
+                                                                Declaration of asteroids and new level
+\***********************************************************************************************************************************************************************************/
     
     func newLevel(){
         lvlNumber += 1
@@ -259,9 +280,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
     }
     
-    /***********************************************************************************************************************************************************************************\
-     Declaration of collisions & crash
-     \***********************************************************************************************************************************************************************************/
+/***********************************************************************************************************************************************************************************\
+                                                                    Declaration of collisions & crash
+\***********************************************************************************************************************************************************************************/
     func didBegin(_ contact: SKPhysicsContact) {
         var body1 = SKPhysicsBody()
         var body2 = SKPhysicsBody()
@@ -332,9 +353,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     
-    /***********************************************************************************************************************************************************************************\
-     Functions GameScore, LifePoint, GameOver
-     \***********************************************************************************************************************************************************************************/
+/***********************************************************************************************************************************************************************************\
+                                                                Functions GameScore, LifePoint, GameStart, GameOver
+\***********************************************************************************************************************************************************************************/
     
     func addScore () {
         gameScore += 1
@@ -363,6 +384,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         xPointLifeLabel.run(scaleSequence2)
     }
     
+    func gameStart () {
+        currentGameState = gameState.inGame
+        let deleteTapToBeginLabel = SKAction.removeFromParent()
+        tapToBeginLabel.run(deleteTapToBeginLabel)
+        let moveShipToRightPosition = SKAction.moveTo(y: self.size.height/7, duration: 1.5)
+        let startLevelAction = SKAction.run(newLevel)
+        let startLevelSequence = SKAction.sequence([moveShipToRightPosition, startLevelAction])
+        planet.run(startLevelSequence)
+    }
+    
+    
+    
     func gameOver () {
         currentGameState = gameState.afterGame // le joueur a perdu on passe en afterGame
         self.removeAllActions()
@@ -379,9 +412,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let changeSceneToGameOverSceneSequence = SKAction.sequence([waitToChangeSceneToGameOverScene, changeSceneToGameOverScene])
         self.run(changeSceneToGameOverSceneSequence)
     }
-    /***********************************************************************************************************************************************************************************\
-     Functions to Transite : GameOverScene, WinScene
-     \***********************************************************************************************************************************************************************************/
+/***********************************************************************************************************************************************************************************\
+                                                Functions to Transite : GameOverScene, WinScene, PausedScene
+\***********************************************************************************************************************************************************************************/
     
     func goToGameOverScene () {
         let sceneToMove_GameOver = GameOverScene(size: self.size)
@@ -389,6 +422,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let transitionScene = SKTransition.fade(withDuration: 1)
         self.view!.presentScene(sceneToMove_GameOver, transition: transitionScene)
     }
+    
+    //func goToWinScene ()
+    //func goToPausedGame ()
     
 }
 
