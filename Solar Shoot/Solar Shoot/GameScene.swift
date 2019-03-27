@@ -32,7 +32,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 \***********************************************************************************************************************************************************************************/
     
     let planet = SKSpriteNode(imageNamed: "Planet")
-    let background = SKSpriteNode(imageNamed: "Background")
     let bulletSound = SKAction.playSoundFileNamed("Bulletsong.mp3", waitForCompletion: false)
     let explosionSound = SKAction.playSoundFileNamed("Explosionsong.mp3", waitForCompletion: false)
     enum gameState { // Pe rmet de dire dans quel état est le jeu
@@ -57,6 +56,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var pointLifeLabel = SKLabelNode(fontNamed: "Starjedi")
     var xPointLifeLabel = SKLabelNode(fontNamed: "Starjedi")
     let tapToBeginLabel = SKLabelNode(fontNamed: "Starjedi")
+    var lastUpdateTime : TimeInterval = 0
+    var deltaFrameTime : TimeInterval = 0
+    var amountToMovePerSecond : CGFloat = 800.0
     
 /***********************************************************************************************************************************************************************************\
                                                         Declaration Game Area, Background, Planet
@@ -80,10 +82,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override func didMove(to view: SKView) {
         gameScore = 0 //On réinitialise le gameScore à 0, sinon "garderait" le score d'avant
         self.physicsWorld.contactDelegate = self
-        background.size = self.size
-        background.position = CGPoint(x: self.size.width / 2, y: self.size.height / 2)
-        background.zPosition = 0
-        self.addChild(background)
+        for i in 0...1 {
+            let background = SKSpriteNode(imageNamed: "Background")
+            background.size = self.size
+            background.anchorPoint = CGPoint(x: 0.5, y: 0)
+            background.position = CGPoint(x: self.size.width / 2,
+                                          y: self.size.height * CGFloat(i))
+            background.zPosition = 0
+            background.name = "Background"
+            self.addChild(background)
+        }
         
         planet.setScale(0.55)
         planet.position = CGPoint(x: self.size.width / 2, y: -planet.size.height)
@@ -139,14 +147,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         tapToBeginLabel.fontColor = SKColor.white
         tapToBeginLabel.zPosition = 1
         tapToBeginLabel.alpha = 0.7
-        tapToBeginLabel.position = CGPoint(x: self.size.width, y: self.size.height/2)
+        tapToBeginLabel.position = CGPoint(x: self.size.width*1.5, y: self.size.height/2)
         self.addChild(tapToBeginLabel)
         
         //fonctionne pas parfaitement
-        let scrollRightToLeft = SKAction.moveTo(x: -self.size.width, duration: 9)
+       let scrollRightToLeft = SKAction.moveTo(x: -self.size.width*0.5, duration: 8)
         let resetScroll = SKAction.moveTo(x: tapToBeginLabel.position.x, duration: 0)
         let scrollSequence = SKAction.sequence([scrollRightToLeft, resetScroll])
-        let scrollSequenceRepeat = SKAction.repeat(scrollSequence, count: 99999999)
+        let scrollSequenceRepeat = SKAction.repeatForever(scrollSequence)
         tapToBeginLabel.run(scrollSequenceRepeat)
         
         
@@ -265,19 +273,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         asteroid.physicsBody!.contactTestBitMask  = physicsCategories.planet | physicsCategories.bullet
         self.addChild(asteroid)
         
+        
         let moveAsteroid = SKAction.move(to: end, duration: 3.5)
         let deleteAsteroid = SKAction.removeFromParent()
         let asteroidSeq = SKAction.sequence([moveAsteroid,deleteAsteroid])
         
+        let oneRevolution = SKAction.rotate(byAngle: CGFloat.pi / 4, duration: 0.1)
+        let repeatRevolution = SKAction.repeatForever(oneRevolution)
+        
         if currentGameState == gameState.inGame { // pas obligatoire, mais si mauvais timing le jeu freeze
             asteroid.run(asteroidSeq)
+            asteroid.run(repeatRevolution)
         }
-        
-        let dx = end.x - start.x
-        let dy = end.y - start.y
-        let amountToRotate = atan2(dy, dx)
-        asteroid.zRotation = amountToRotate
-        
     }
     
 /***********************************************************************************************************************************************************************************\
@@ -426,6 +433,31 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     //func goToWinScene ()
     //func goToPausedGame ()
     
+/***********************************************************************************************************************************************************************************\
+                                                                    Functions Update
+\***********************************************************************************************************************************************************************************/
+    
+    
+    
+    override func update(_ currentTime: TimeInterval) {
+        if currentGameState == gameState.inGame {
+            if lastUpdateTime == 0 {
+                lastUpdateTime = currentTime
+            }
+            else {
+                deltaFrameTime = currentTime - lastUpdateTime
+                lastUpdateTime =  currentTime
+            }
+            let amounToMoveBackground = amountToMovePerSecond * CGFloat(deltaFrameTime)
+            self.enumerateChildNodes(withName: "Background") {
+                (background, stop) in
+                background.position.y -= amounToMoveBackground
+                if background.position.y < -self.size.height {
+                    background.position.y += self.size.height*2
+                }
+            }
+        }
+    }
 }
 
-
+ 
