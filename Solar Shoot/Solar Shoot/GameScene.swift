@@ -2,7 +2,7 @@
 //  GameScene.swift
 //  Solar Shoot V1
 //
-//  Created by Lucas Abijmil on 19/02/2019.
+//  Created by L2R1 on 19/02/2019.
 //  Copyright © 2019 Lucas Abijmil. All rights reserved.
 //
 
@@ -23,15 +23,42 @@ extension BinaryInteger {
 }
 
 var gameScore = 0 //Cette variable est publique à toutes les scenes
+var lvlNumber : Int = 8 
+var lvlRequired : Int = 1
 let gameScoreString = gameScore.formattedWithSeparatorGameScene
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
     
-/***********************************************************************************************************************************************************************************\
-                                                                Declaration of general var
+ /**********************************************************************************************************************************************************************************\
+                                                        Declaration of general var
 \***********************************************************************************************************************************************************************************/
     
-    let planet = SKSpriteNode(imageNamed: "Planet")
+    //On déclare toutes les planètes en fonctions des niveaux
+    private var planet = Planet(imageName: "Planet")
+    private var planetLvl1 = Planet(imageName: "Mercure")
+    private var planetLvl2 = Planet(imageName: "Venus")
+    private var planetLvl3 = Planet(imageName: "Terre")
+    private var planetLvl4 = Planet(imageName: "Mars")
+    private var planetLvl5 = Planet(imageName: "Jupiter")
+    private var planetLvl6 = Planet(imageName: "Saturne")
+    private var planetLvl7 = Planet(imageName: "Uranus")
+    private var planetLvl8 = Planet(imageName: "Neptune")
+    
+
+    private var bullet = Bullet(imageName: "Bullet")
+    
+ //   private var background = Background(imageName: "BackgroundTest")
+    private var asteroide = Asteroides(img: "Asteroid")
+    
+    
+    
+   
+    
+    
+    // let back = SKSpriteNode(imageNamed: "Background")
+   
+    
+    
     let bulletSound = SKAction.playSoundFileNamed("Bulletsong.mp3", waitForCompletion: false)
     let explosionSound = SKAction.playSoundFileNamed("Explosionsong.mp3", waitForCompletion: false)
     enum gameState { // Pe rmet de dire dans quel état est le jeu
@@ -47,7 +74,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         static let bullet : UInt32 = 0b10 // 2 en binaire
         static let asteroid: UInt32 = 0b100 // 4 en binaire
     }
-    var lvlNumber = 0
+    
     
     //var gameScore = 0 ––> Placé en public afin que les menus GameOver / Win puissent y accéder
     var gameScoreLabel = SKLabelNode(fontNamed: "Starjedi")
@@ -56,12 +83,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var pointLifeLabel = SKLabelNode(fontNamed: "Starjedi")
     var xPointLifeLabel = SKLabelNode(fontNamed: "Starjedi")
     let tapToBeginLabel = SKLabelNode(fontNamed: "Starjedi")
+    private var updateTime: Double = 0
     var lastUpdateTime : TimeInterval = 0
     var deltaFrameTime : TimeInterval = 0
     var amountToMovePerSecond : CGFloat = 800.0
     
-/***********************************************************************************************************************************************************************************\
-                                                        Declaration Game Area, Background, Planet
+/**********************************************************************************************************************************************************************************\
+                                                            Declaration Game Area, Background, Planet
 \***********************************************************************************************************************************************************************************/
     
     let gameArea : CGRect
@@ -83,27 +111,144 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         gameScore = 0 //On réinitialise le gameScore à 0, sinon "garderait" le score d'avant
         self.physicsWorld.contactDelegate = self
         for i in 0...1 {
-            let background = SKSpriteNode(imageNamed: "Background")
-            background.size = self.size
-            background.anchorPoint = CGPoint(x: 0.5, y: 0)
-            background.position = CGPoint(x: self.size.width / 2,
-                                          y: self.size.height * CGFloat(i))
-            background.zPosition = 0
-            background.name = "Background"
-            self.addChild(background)
+            switch lvlSelected {
+            case 1 :
+                let background = SKSpriteNode(imageNamed: "Fond_Mercure")
+                background.size = self.size
+                background.anchorPoint = CGPoint(x: 0.5, y: 0)
+                background.position = CGPoint(x: self.size.width / 2,
+                                              y: self.size.height * CGFloat(i))
+                background.zPosition = 0
+                background.name = "Background"
+                self.addChild(background)
+                break
+            case 2 :
+                let background = SKSpriteNode(imageNamed: "Fond_Venus")
+                background.size = self.size
+                background.anchorPoint = CGPoint(x: 0.5, y: 0)
+                background.position = CGPoint(x: self.size.width / 2,
+                                              y: self.size.height * CGFloat(i))
+                background.zPosition = 0
+                background.name = "Background"
+                self.addChild(background)
+                break
+            case 3 :
+                let background = SKSpriteNode(imageNamed: "Fond_Terre")
+                background.size = self.size
+                background.anchorPoint = CGPoint(x: 0.5, y: 0)
+                background.position = CGPoint(x: self.size.width / 2,
+                                              y: self.size.height * CGFloat(i))
+                background.zPosition = 0
+                background.name = "Background"
+                self.addChild(background)
+                break
+            case 4 :
+                let background = SKSpriteNode(imageNamed: "Fond_Mars")
+                background.size = self.size
+                background.anchorPoint = CGPoint(x: 0.5, y: 0)
+                background.position = CGPoint(x: self.size.width / 2,
+                                              y: self.size.height * CGFloat(i))
+                background.zPosition = 0
+                background.name = "Background"
+                self.addChild(background)
+                break
+            case 5 :
+                let background = SKSpriteNode(imageNamed: "Fond_Jupiter")
+                background.size = self.size
+                background.anchorPoint = CGPoint(x: 0.5, y: 0)
+                background.position = CGPoint(x: self.size.width / 2,
+                                              y: self.size.height * CGFloat(i))
+                background.zPosition = 0
+                background.name = "Background"
+                self.addChild(background)
+                break
+            case 6 :
+                let background = SKSpriteNode(imageNamed: "Fond_Saturne")
+                background.size = self.size
+                background.anchorPoint = CGPoint(x: 0.5, y: 0)
+                background.position = CGPoint(x: self.size.width / 2,
+                                              y: self.size.height * CGFloat(i))
+                background.zPosition = 0
+                background.name = "Background"
+                self.addChild(background)
+                break
+            case 7 :
+                let background = SKSpriteNode(imageNamed: "Fond_Uranus")
+                background.size = self.size
+                background.anchorPoint = CGPoint(x: 0.5, y: 0)
+                background.position = CGPoint(x: self.size.width / 2,
+                                              y: self.size.height * CGFloat(i))
+                background.zPosition = 0
+                background.name = "Background"
+                self.addChild(background)
+                break
+            case 8 :
+                let background = SKSpriteNode(imageNamed: "Fond_Neptune")
+                background.size = self.size
+                background.anchorPoint = CGPoint(x: 0.5, y: 0)
+                background.position = CGPoint(x: self.size.width / 2,
+                                              y: self.size.height * CGFloat(i))
+                background.zPosition = 0
+                background.name = "Background"
+                self.addChild(background)
+                break
+            default:
+                let background = SKSpriteNode(imageNamed: "Carte")
+                background.size = self.size
+                background.anchorPoint = CGPoint(x: 0.5, y: 0)
+                background.position = CGPoint(x: self.size.width / 2,
+                                              y: self.size.height * CGFloat(i))
+                background.zPosition = 0
+                background.name = "Background"
+                self.addChild(background)
+                break
+    
+            }
+           
+ 
+        }
+        //Utilisation classe background
+        //background.jeuBackground(parent: self) //ne sert a rien, ya tt juste au-dessus
+        //background.scrolling(image: back, parent: self)//thread
+        switch lvlSelected {
+        case 1 :
+            planet = planetLvl1
+            planet.addPlanet(parent: self)
+            break
+        case 2 :
+            planet = planetLvl2
+            planet.addPlanet(parent: self)
+            break
+        case 3 :
+            planet = planetLvl3
+            planet.addPlanet(parent: self)
+            break
+        case 4 :
+            planet = planetLvl4
+            planet.addPlanet(parent: self)
+            break
+        case 5 :
+            planet = planetLvl5
+            planet.addPlanet(parent: self)
+            break
+        case 6 :
+            planet = planetLvl6
+            planet.addPlanet(parent: self)
+            break
+        case 7 :
+            planet = planetLvl7
+            planet.addPlanet(parent: self)
+            break
+        case 8 :
+            planet = planetLvl8
+            planet.addPlanet(parent: self)
+            break
+        default :
+            planet.addPlanet(parent: self)
+            break
         }
         
-        planet.setScale(0.55)
-        planet.position = CGPoint(x: self.size.width / 2, y: -planet.size.height)
-        planet.zPosition = 2
-        planet.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-        //planet.physicsBody = SKPhysicsBody(rectangleOf: planet.size) // déclaration du contouring de la planète, demandé au prof pour le typede SKphysics
-        planet.physicsBody = SKPhysicsBody(circleOfRadius: planet.size.width/2, center: planet.anchorPoint)
-        planet.physicsBody!.affectedByGravity = false // on désactive la gravité pour la planète
-        planet.physicsBody!.categoryBitMask = physicsCategories.planet
-        planet.physicsBody!.collisionBitMask = physicsCategories.none
-        planet.physicsBody!.contactTestBitMask = physicsCategories.asteroid
-        self.addChild(planet)
+    
         
         gameScoreLabel.text = "0" // BON JE REPOSITIONNE LES VIES
         gameScoreLabel.fontSize = 50
@@ -151,7 +296,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.addChild(tapToBeginLabel)
         
         //fonctionne pas parfaitement
-       let scrollRightToLeft = SKAction.moveTo(x: -self.size.width*0.5, duration: 8)
+        let scrollRightToLeft = SKAction.moveTo(x: -self.size.width*0.5, duration: 8)
         let resetScroll = SKAction.moveTo(x: tapToBeginLabel.position.x, duration: 0)
         let scrollSequence = SKAction.sequence([scrollRightToLeft, resetScroll])
         let scrollSequenceRepeat = SKAction.repeatForever(scrollSequence)
@@ -161,7 +306,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
 /***********************************************************************************************************************************************************************************\
-                                                                Declaration Bullet, func FireBullet
+                                                                    Declaration Bullet, func FireBullet
 \***********************************************************************************************************************************************************************************/
     
     
@@ -185,13 +330,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     
-    
+ 
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if currentGameState == gameState.preGame {
             gameStart()
         }
-        else if currentGameState == gameState.inGame {
+       else if currentGameState == gameState.inGame {
             fireBullet()
         }
     }
@@ -228,9 +373,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
         }
     }
-    
 /***********************************************************************************************************************************************************************************\
-                                                            Declaration of function random (for asteroids spawn)
+                                                    Declaration of function random (for asteroids spawn)
 \***********************************************************************************************************************************************************************************/
     func random() -> CGFloat {
         return CGFloat(Float(arc4random()) / 0xFFFFFFFF) //générer un nombre aléatoire
@@ -239,13 +383,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func random(min: CGFloat, max: CGFloat) -> CGFloat {
         return random() * (max - min) + min
     }
-    
 /***********************************************************************************************************************************************************************************\
-                                                                Declaration of asteroids and new level
+                                                        Declaration of asteroids and new level
 \***********************************************************************************************************************************************************************************/
     
-    func newLevel(){
-        lvlNumber += 1
+    /*func asteroids (){
+        asteroide.addAsteroid(parent: self)
+     }*/ //Fonction pour utiliser la classe asteroide : crée un thread
+    
+    func parametersLevel(){
         let spawn = SKAction.run(asteroids)//Crée une action qui exécute un bloc, ici les asteroides
         let waitSpawn = SKAction.wait(forDuration: 0.8)//Chaque seconde un nouvel asteroides tombe
         let sequence = SKAction.sequence([waitSpawn,spawn])//sequence:asteroides+attendre 0.8 sec
@@ -278,6 +424,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let deleteAsteroid = SKAction.removeFromParent()
         let asteroidSeq = SKAction.sequence([moveAsteroid,deleteAsteroid])
         
+     
+        
         let oneRevolution = SKAction.rotate(byAngle: CGFloat.pi / 4, duration: 0.1)
         let repeatRevolution = SKAction.repeatForever(oneRevolution)
         
@@ -287,8 +435,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
+    
 /***********************************************************************************************************************************************************************************\
-                                                                    Declaration of collisions & crash
+                                                    Declaration of collisions & crash
 \***********************************************************************************************************************************************************************************/
     func didBegin(_ contact: SKPhysicsContact) {
         var body1 = SKPhysicsBody()
@@ -361,7 +510,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     
 /***********************************************************************************************************************************************************************************\
-                                                                Functions GameScore, LifePoint, GameStart, GameOver
+                                                    Functions GameScore, LifePoint, GameStart, GameOver
 \***********************************************************************************************************************************************************************************/
     
     func addScore () {
@@ -396,7 +545,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let deleteTapToBeginLabel = SKAction.removeFromParent()
         tapToBeginLabel.run(deleteTapToBeginLabel)
         let moveShipToRightPosition = SKAction.moveTo(y: self.size.height/7, duration: 1.5)
-        let startLevelAction = SKAction.run(newLevel)
+        let startLevelAction = SKAction.run(parametersLevel)
         let startLevelSequence = SKAction.sequence([moveShipToRightPosition, startLevelAction])
         planet.run(startLevelSequence)
     }
@@ -434,12 +583,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     //func goToPausedGame ()
     
 /***********************************************************************************************************************************************************************************\
-                                                                    Functions Update
+                                                            Functions Update
 \***********************************************************************************************************************************************************************************/
     
     
     
     override func update(_ currentTime: TimeInterval) {
+     
         if currentGameState == gameState.inGame {
             if lastUpdateTime == 0 {
                 lastUpdateTime = currentTime
@@ -448,6 +598,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 deltaFrameTime = currentTime - lastUpdateTime
                 lastUpdateTime =  currentTime
             }
+        
             let amounToMoveBackground = amountToMovePerSecond * CGFloat(deltaFrameTime)
             self.enumerateChildNodes(withName: "Background") {
                 (background, stop) in
@@ -460,4 +611,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
 }
 
- 
+
+
+    
+

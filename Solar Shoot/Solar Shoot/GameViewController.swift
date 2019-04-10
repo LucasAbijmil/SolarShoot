@@ -17,7 +17,7 @@ class GameViewController: UIViewController {
         
         if let view = self.view as! SKView? {
             // Load the SKScene from 'GameScene.sks'
-            let scene = GameScene (size: CGSize(width: 1535, height: 2048))
+            let scene = MainmenuSolar (size: CGSize(width: 1535, height: 2048))
             // Set the scale mode to scale to fit the window
             scene.scaleMode = .aspectFill
             
@@ -27,9 +27,9 @@ class GameViewController: UIViewController {
             
             view.ignoresSiblingOrder = true
             
-            view.showsFPS = true
-            view.showsPhysics = true
-            view.showsNodeCount = true
+            view.showsFPS = false
+            view.showsPhysics = false
+            view.showsNodeCount = false
         }
     }
     

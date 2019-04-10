@@ -16,52 +16,52 @@ class MainmenuSolar:SKScene{
         menu.zPosition = 0
         self.addChild(menu)
         
-        let Name = SKLabelNode(fontNamed :"Starjedi")
-        Name.text = "Solar"
-        Name.fontSize = 200
-        Name.fontColor = SKColor.white
-        Name.position = CGPoint(x:self.size.width*0.5,y:self.size.height*0.8)
-        Name.zPosition = 1
-        self.addChild(Name)
+        let solar = SKLabelNode(fontNamed :"Starjedi")
+        solar.text = "Solar"
+        solar.fontSize = 200
+        solar.fontColor = SKColor.white
+        solar.position = CGPoint(x:self.size.width*0.5,y:self.size.height*0.8)
+        solar.zPosition = 1
+        self.addChild(solar)
         
         
-        let Name1 = SKLabelNode(fontNamed :"Starjedi")
-        Name1.text = "Shoot"
-        Name1.fontSize = 200
-        Name1.fontColor = SKColor.white
-        Name1.position = CGPoint(x:self.size.width*0.5,y:self.size.height*0.7)
-        Name1.zPosition = 1
-        self.addChild(Name1)
+        let shoot = SKLabelNode(fontNamed :"Starjedi")
+        shoot.text = "Shoot"
+        shoot.fontSize = 200
+        shoot.fontColor = SKColor.white
+        shoot.position = CGPoint(x:self.size.width*0.5,y:self.size.height*0.7)
+        shoot.zPosition = 1
+        self.addChild(shoot)
         
         
-        let Bouton1 = SKLabelNode(fontNamed :"Starjedi")
-        Bouton1.text = "jouer"
-        Bouton1.fontSize = 100
-        Bouton1.fontColor = SKColor.white
-        Bouton1.position = CGPoint(x:self.size.width*0.5,y:self.size.height*0.5)
-        Bouton1.zPosition = 1
-        Bouton1.name = "bouton1"
-        self.addChild(Bouton1)
+        let play = SKLabelNode(fontNamed :"Starjedi")
+        play.text = "jouer"
+        play.fontSize = 100
+        play.fontColor = SKColor.white
+        play.position = CGPoint(x:self.size.width*0.5,y:self.size.height*0.5)
+        play.zPosition = 1
+        play.name = "bouton1"
+        self.addChild(play)
         
         
-        let Bouton2 = SKLabelNode(fontNamed :"Starjedi")
-        Bouton2.text = "options"
-        Bouton2.fontSize = 100
-        Bouton2.fontColor = SKColor.white
-        Bouton2.position = CGPoint(x:self.size.width*0.5,y:self.size.height*0.4)
-        Bouton2.zPosition = 1
-        Bouton2.name = "bouton2"
-        self.addChild(Bouton2)
+        let options = SKLabelNode(fontNamed :"Starjedi")
+        options.text = "options"
+        options.fontSize = 100
+        options.fontColor = SKColor.white
+        options.position = CGPoint(x:self.size.width*0.5,y:self.size.height*0.4)
+        options.zPosition = 1
+        options.name = "bouton2"
+        self.addChild(options)
         
         
-        let Bouton3 = SKLabelNode(fontNamed :"Starjedi")
-        Bouton3.text = "crédits"
-        Bouton3.fontSize = 100
-        Bouton3.fontColor = SKColor.white
-        Bouton3.position = CGPoint(x:self.size.width*0.5,y:self.size.height*0.3)
-        Bouton3.zPosition = 1
-        Bouton3.name = "bouton3"
-        self.addChild(Bouton3)
+        let credits = SKLabelNode(fontNamed :"Starjedi")
+        credits.text = "crédits"
+        credits.fontSize = 100
+        credits.fontColor = SKColor.white
+        credits.position = CGPoint(x:self.size.width*0.5,y:self.size.height*0.3)
+        credits.zPosition = 1
+        credits.name = "bouton3"
+        self.addChild(credits)
     }
     override func touchesBegan(_ touches: Set<UITouch>,
                                with event: UIEvent?){
