@@ -38,7 +38,7 @@ class GameOverScene : SKScene {
         self.addChild(Name)
         
         let scoreLabel = SKLabelNode(fontNamed: "Starjedi")
-        scoreLabel.text = "Score : \(gameScoreString)"
+        scoreLabel.text = "Score : \(gameScore.formattedWithSeparatorGameOverScene )"
         scoreLabel.fontSize = 100
         scoreLabel.fontColor = SKColor.white
         scoreLabel.position = CGPoint(x: self.size.width*0.5 , y: self.size.height*0.6)

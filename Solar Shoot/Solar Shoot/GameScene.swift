@@ -23,10 +23,14 @@ extension BinaryInteger {
 }
 
 var gameScore = 0 //Cette variable est publique à toutes les scenes
-var lvlNumber : Int = 8 
+var lvlNumber : Int = 5
 var lvlRequired : Int = 1
 let gameScoreString = gameScore.formattedWithSeparatorGameScene
+let musique = Music(musiqueActivee: musiqueActivee)
+var stopLabel = SKSpriteNode(imageNamed:"play")
+let exitLabel = SKSpriteNode(imageNamed:"exit")
 class GameScene: SKScene, SKPhysicsContactDelegate {
+    private var play : Bool
     
     
  /**********************************************************************************************************************************************************************************\
@@ -34,14 +38,31 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 \***********************************************************************************************************************************************************************************/
     
     //On déclare toutes les planètes en fonctions des niveaux
-    private var planet = Planet(imageName: "Planet")
+    public var planet = Planet(imageName: "Planet")
+    public var planetIcon = PlanetLife(image: "Planet")
+    
+    private var planetLvlI = PlanetLife(image: "Mercure")
     private var planetLvl1 = Planet(imageName: "Mercure")
+    
+    private var planetLvlII = PlanetLife(image: "Venus")
     private var planetLvl2 = Planet(imageName: "Venus")
+    
+    private var planetLvlIII = PlanetLife(image: "Terre")
     private var planetLvl3 = Planet(imageName: "Terre")
+    
+    private var planetLvlIV = PlanetLife(image: "Mars")
     private var planetLvl4 = Planet(imageName: "Mars")
+    
+    private var planetLvlV = PlanetLife(image: "Jupiter")
     private var planetLvl5 = Planet(imageName: "Jupiter")
+    
+    private var planetLvlVI = PlanetLife(image: "Saturne")
     private var planetLvl6 = Planet(imageName: "Saturne")
+    
+    private var planetLvlVII = PlanetLife(image: "Uranus")
     private var planetLvl7 = Planet(imageName: "Uranus")
+    
+    private var planetLvlVIII = PlanetLife(image: "Neptune")
     private var planetLvl8 = Planet(imageName: "Neptune")
     
 
@@ -51,7 +72,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     private var asteroide = Asteroides(img: "Asteroid")
     
     
-    
+    private var label = Label()
    
     
     
@@ -77,12 +98,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     
     //var gameScore = 0 ––> Placé en public afin que les menus GameOver / Win puissent y accéder
-    var gameScoreLabel = SKLabelNode(fontNamed: "Starjedi")
+    /*var gameScoreLabel = SKLabelNode(fontNamed: "Starjedi")*/
     var pointLife = 3
-    let planetLife = SKSpriteNode(imageNamed: "Planet")
+   /* let planetLife = SKSpriteNode(imageNamed: "Planet")
     var pointLifeLabel = SKLabelNode(fontNamed: "Starjedi")
     var xPointLifeLabel = SKLabelNode(fontNamed: "Starjedi")
-    let tapToBeginLabel = SKLabelNode(fontNamed: "Starjedi")
+    let tapToBeginLabel = SKLabelNode(fontNamed: "Starjedi")*/
     private var updateTime: Double = 0
     var lastUpdateTime : TimeInterval = 0
     var deltaFrameTime : TimeInterval = 0
@@ -100,207 +121,150 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let heightPlayable = size.width / maxRatioAspect
         let heightMargin = (size.height - heightPlayable) / 1000
         gameArea = CGRect(x: widthMargin, y: heightMargin, width: widthPlayable, height: heightPlayable)
+        play.self = true
         super.init(size: size)
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+   
     
     override func didMove(to view: SKView) {
+        //Permet de mettre la musique en fonction de si on l'a activer ou non
+        if(musique.getMusiqueActivee()){
+            musique.playMusique()
+        }
+        else {
+            musique.stopMusique()
+        }
         gameScore = 0 //On réinitialise le gameScore à 0, sinon "garderait" le score d'avant
         self.physicsWorld.contactDelegate = self
+        /*func afficher(planet:Planet,planetIcon:PlanetLife){
+            self.planet = planet
+            planet.addPlanet(parent: self)
+            planet.phys()
+            self.planetIcon = planetIcon
+            planetIcon.addPlanet(parent: self)
+        }*/
         for i in 0...1 {
+            func AffichageBack(background:SKSpriteNode){
+                background.size = self.size
+                background.anchorPoint = CGPoint(x: 0.5, y: 0)
+                background.position = CGPoint(x: self.size.width / 2,
+                                              y: self.size.height * CGFloat(i))
+                background.zPosition = 0
+                background.name = "Background"
+                self.addChild(background)
+            }
             switch lvlSelected {
             case 1 :
                 let background = SKSpriteNode(imageNamed: "Fond_Mercure")
-                background.size = self.size
-                background.anchorPoint = CGPoint(x: 0.5, y: 0)
-                background.position = CGPoint(x: self.size.width / 2,
-                                              y: self.size.height * CGFloat(i))
-                background.zPosition = 0
-                background.name = "Background"
-                self.addChild(background)
+                AffichageBack(background: background)
                 break
             case 2 :
                 let background = SKSpriteNode(imageNamed: "Fond_Venus")
-                background.size = self.size
-                background.anchorPoint = CGPoint(x: 0.5, y: 0)
-                background.position = CGPoint(x: self.size.width / 2,
-                                              y: self.size.height * CGFloat(i))
-                background.zPosition = 0
-                background.name = "Background"
-                self.addChild(background)
+                AffichageBack(background: background)
                 break
             case 3 :
                 let background = SKSpriteNode(imageNamed: "Fond_Terre")
-                background.size = self.size
-                background.anchorPoint = CGPoint(x: 0.5, y: 0)
-                background.position = CGPoint(x: self.size.width / 2,
-                                              y: self.size.height * CGFloat(i))
-                background.zPosition = 0
-                background.name = "Background"
-                self.addChild(background)
+                AffichageBack(background: background)
                 break
             case 4 :
                 let background = SKSpriteNode(imageNamed: "Fond_Mars")
-                background.size = self.size
-                background.anchorPoint = CGPoint(x: 0.5, y: 0)
-                background.position = CGPoint(x: self.size.width / 2,
-                                              y: self.size.height * CGFloat(i))
-                background.zPosition = 0
-                background.name = "Background"
-                self.addChild(background)
+                AffichageBack(background: background)
                 break
             case 5 :
                 let background = SKSpriteNode(imageNamed: "Fond_Jupiter")
-                background.size = self.size
-                background.anchorPoint = CGPoint(x: 0.5, y: 0)
-                background.position = CGPoint(x: self.size.width / 2,
-                                              y: self.size.height * CGFloat(i))
-                background.zPosition = 0
-                background.name = "Background"
-                self.addChild(background)
+                AffichageBack(background: background)
                 break
             case 6 :
                 let background = SKSpriteNode(imageNamed: "Fond_Saturne")
-                background.size = self.size
-                background.anchorPoint = CGPoint(x: 0.5, y: 0)
-                background.position = CGPoint(x: self.size.width / 2,
-                                              y: self.size.height * CGFloat(i))
-                background.zPosition = 0
-                background.name = "Background"
-                self.addChild(background)
+                AffichageBack(background: background)
                 break
             case 7 :
                 let background = SKSpriteNode(imageNamed: "Fond_Uranus")
-                background.size = self.size
-                background.anchorPoint = CGPoint(x: 0.5, y: 0)
-                background.position = CGPoint(x: self.size.width / 2,
-                                              y: self.size.height * CGFloat(i))
-                background.zPosition = 0
-                background.name = "Background"
-                self.addChild(background)
+                AffichageBack(background: background)
                 break
             case 8 :
                 let background = SKSpriteNode(imageNamed: "Fond_Neptune")
-                background.size = self.size
-                background.anchorPoint = CGPoint(x: 0.5, y: 0)
-                background.position = CGPoint(x: self.size.width / 2,
-                                              y: self.size.height * CGFloat(i))
-                background.zPosition = 0
-                background.name = "Background"
-                self.addChild(background)
+                AffichageBack(background: background)
                 break
             default:
                 let background = SKSpriteNode(imageNamed: "Carte")
-                background.size = self.size
-                background.anchorPoint = CGPoint(x: 0.5, y: 0)
-                background.position = CGPoint(x: self.size.width / 2,
-                                              y: self.size.height * CGFloat(i))
-                background.zPosition = 0
-                background.name = "Background"
-                self.addChild(background)
+                AffichageBack(background: background)
                 break
     
             }
-           
- 
         }
-        //Utilisation classe background
-        //background.jeuBackground(parent: self) //ne sert a rien, ya tt juste au-dessus
-        //background.scrolling(image: back, parent: self)//thread
-        switch lvlSelected {
-        case 1 :
-            planet = planetLvl1
-            planet.addPlanet(parent: self)
-            break
-        case 2 :
-            planet = planetLvl2
-            planet.addPlanet(parent: self)
-            break
-        case 3 :
-            planet = planetLvl3
-            planet.addPlanet(parent: self)
-            break
-        case 4 :
-            planet = planetLvl4
-            planet.addPlanet(parent: self)
-            break
-        case 5 :
-            planet = planetLvl5
-            planet.addPlanet(parent: self)
-            break
-        case 6 :
-            planet = planetLvl6
-            planet.addPlanet(parent: self)
-            break
-        case 7 :
-            planet = planetLvl7
-            planet.addPlanet(parent: self)
-            break
-        case 8 :
-            planet = planetLvl8
-            planet.addPlanet(parent: self)
-            break
-        default :
-            planet.addPlanet(parent: self)
-            break
-        }
+            //Utilisation classe background
+            //background.jeuBackground(parent: self) //ne sert a rien, ya tt juste au-dessus
+            //background.scrolling(image: back, parent: self)//thread
+       
+           switch lvlSelected {
+            case 1 :
+                label.afficherPlanet(parent:self,planet:planetLvl1,planetIcon:planetLvlI)
+                break
+            case 2 :
+                label.afficherPlanet(parent:self,planet:planetLvl2,planetIcon:planetLvlII)
+                break
+            case 3 :
+                label.afficherPlanet(parent:self,planet:planetLvl3,planetIcon:planetLvlIII)
+                break
+            case 4 :
+                label.afficherPlanet(parent:self,planet:planetLvl4,planetIcon:planetLvlIV)
+                break
+            case 5 :
+                label.afficherPlanet(parent:self,planet:planetLvl5,planetIcon:planetLvlV)
+                break
+            case 6 :
+                label.afficherPlanet(parent:self,planet:planetLvl6,planetIcon:planetLvlVI)
+                break
+            case 7 :
+                label.afficherPlanet(parent:self,planet:planetLvl7,planetIcon:planetLvlVII)
+                break
+            case 8 :
+                label.afficherPlanet(parent:self,planet:planetLvl8,planetIcon:planetLvlVIII)
+                break
+            default :
+                planet.addPlanet(parent: self)
+                planet.phys()
+                planetIcon.addPlanet(parent: self)
+                break
+            }
         
-    
+        label.AffichageLabel(label: label.gameScoreLabel, text: "0", fontS: 50, horAlign: SKLabelHorizontalAlignmentMode.left, xW: 0.20,parent: self)
+        label.AffichageLabel(label: label.xPointLifeLabel, text: "x", fontS: 30, horAlign: SKLabelHorizontalAlignmentMode.right, xW: 0.73,parent: self)
+        label.AffichageLabel(label: label.pointLifeLabel, text: "3", fontS: 50, horAlign: SKLabelHorizontalAlignmentMode.right, xW: 0.75,parent: self)
         
-        gameScoreLabel.text = "0" // BON JE REPOSITIONNE LES VIES
-        gameScoreLabel.fontSize = 50
-        gameScoreLabel.fontColor = SKColor.white
-        gameScoreLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.left
-        gameScoreLabel.position = CGPoint(x: self.size.width * 0.20, y: self.size.height + gameScoreLabel.frame.size.height)
-        gameScoreLabel.zPosition = 100
-        self.addChild(gameScoreLabel)
-        
-        xPointLifeLabel.text = "x"
-        xPointLifeLabel.fontSize = 30
-        xPointLifeLabel.fontColor = SKColor.white
-        xPointLifeLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.right
-        xPointLifeLabel.position = CGPoint(x: self.size.width * 0.73, y: self.size.height + xPointLifeLabel.frame.size.height)
-        xPointLifeLabel.zPosition = 100
-        self.addChild(xPointLifeLabel)
-        
-        pointLifeLabel.text = "3"
-        pointLifeLabel.fontSize = 50
-        pointLifeLabel.fontColor = SKColor.white
-        pointLifeLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.right
-        pointLifeLabel.position = CGPoint(x: self.size.width * 0.75, y: self.size.height + pointLifeLabel.frame.size.height)
-        pointLifeLabel.zPosition = 100
-        self.addChild(pointLifeLabel)
-        
-        
-        planetLife.setScale(0.15)
-        planetLife.position = CGPoint(x: self.size.width * 0.78, y: self.size.height + planetLife.frame.size.height)
-        planetLife.zPosition = 100
-        planetLife.anchorPoint = CGPoint(x: 0.5, y: 0.25) // y = 0.25 sinon pas bien aligné en y
-        self.addChild(planetLife)
-        
+       
         let moveToScreen = SKAction.moveTo(y: self.size.height*0.9, duration: 1.5)
-        gameScoreLabel.run(moveToScreen)
-        xPointLifeLabel.run(moveToScreen)
-        pointLifeLabel.run(moveToScreen)
-        planetLife.run(moveToScreen)
+        label.gameScoreLabel.run(moveToScreen)
+        label.xPointLifeLabel.run(moveToScreen)
+        label.pointLifeLabel.run(moveToScreen)
+        planetIcon.run(moveToScreen)
         
-        tapToBeginLabel.text = "Appuyez pour commencer votre mission"
-        tapToBeginLabel.fontSize = 80
-        tapToBeginLabel.fontColor = SKColor.white
-        tapToBeginLabel.zPosition = 1
-        tapToBeginLabel.alpha = 0.7
-        tapToBeginLabel.position = CGPoint(x: self.size.width*1.5, y: self.size.height/2)
-        self.addChild(tapToBeginLabel)
+        label.phrasePreGame(parent:self,label : label.tapToBeginLabel)
         
         //fonctionne pas parfaitement
         let scrollRightToLeft = SKAction.moveTo(x: -self.size.width*0.5, duration: 8)
-        let resetScroll = SKAction.moveTo(x: tapToBeginLabel.position.x, duration: 0)
+        let resetScroll = SKAction.moveTo(x: label.tapToBeginLabel.position.x, duration: 0)
         let scrollSequence = SKAction.sequence([scrollRightToLeft, resetScroll])
         let scrollSequenceRepeat = SKAction.repeatForever(scrollSequence)
-        tapToBeginLabel.run(scrollSequenceRepeat)
+        label.tapToBeginLabel.run(scrollSequenceRepeat)
+        
+        stopLabel.setScale(0.4)
+        //stopLabel.position = CGPoint(x: self.size.width*0.2 , y: self.size.height*1.25)
+        stopLabel.position = CGPoint(x: self.size.width/2 , y: self.size.height/18)
+        stopLabel.zPosition = 100
+        stopLabel.name="boutonPause"
+        self.addChild(stopLabel)
+        
+        exitLabel.setScale(0.1)
+        exitLabel.position = CGPoint(x: self.size.width/4 , y: self.size.height/18)
+        exitLabel.zPosition = 100
+        exitLabel.name="boutonExit"
+        self.addChild(exitLabel)
         
         
     }
@@ -338,6 +302,44 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
        else if currentGameState == gameState.inGame {
             fireBullet()
+        }
+        for touch: AnyObject in touches{
+            let toucher = touch.location(in:self)
+            let nodeTapped = atPoint (_:toucher)
+            if (nodeTapped.name  == "boutonPause"){
+                
+                if(play){
+                    play = false
+                    let pauseAction = SKAction.run{
+                        self.view?.isPaused = true
+                    }
+                    self.run(pauseAction)
+                    stopLabel = SKSpriteNode(imageNamed:"pause")
+                    stopLabel.setScale(0.4)
+                    stopLabel.position = CGPoint(x: self.size.width/2 , y: self.size.height/18)
+                    stopLabel.zPosition = 100
+                    stopLabel.name="boutonPause"
+                    self.addChild(stopLabel)
+                    
+                }
+                else{
+                    play=true
+                    self.view?.isPaused = false
+                    stopLabel = SKSpriteNode(imageNamed:"play")
+                    stopLabel.setScale(0.4)
+                    stopLabel.position = CGPoint(x: self.size.width/2 , y: self.size.height/18)
+                    stopLabel.zPosition = 100
+                    stopLabel.name="boutonPause"
+                    self.addChild(stopLabel)
+                    
+                }
+            }
+            if (nodeTapped.name  == "boutonExit"){
+                let scene = ExitScene(size: self.size)
+                scene.scaleMode = self.scaleMode
+                let Transition = SKTransition.reveal(with: .down, duration: 1.5)
+                self.view!.presentScene(scene, transition:Transition)
+            }
         }
     }
     
@@ -514,36 +516,25 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 \***********************************************************************************************************************************************************************************/
     
     func addScore () {
-        gameScore += 1
-        gameScoreLabel.text = "\(gameScore.formattedWithSeparatorGameScene)"
+        gameScore += 1000
+        label.gameScoreLabel.text = "\(gameScore.formattedWithSeparatorGameScene)"
     }
     
     func lifePoint () {
         pointLife -= 1
         if pointLife <= 1 {
-            pointLifeLabel.text = "\(pointLife)"
+            label.pointLifeLabel.text = "\(pointLife)"
         }
         else if pointLife > 1 {
-            pointLifeLabel.text = "\(pointLife)"
+            label.pointLifeLabel.text = "\(pointLife)"
         }
-        let scaleUp = SKAction.scale(to: 1.5, duration: 0.2)
-        let scaleDown = SKAction.scale(to: 1, duration: 0.2)
-        let changeColor = SKAction.colorize(with: UIColor.red, colorBlendFactor: 1, duration: 0)
-        let returnColor = SKAction.colorize(with: UIColor.white, colorBlendFactor: 1, duration: 0)
-        let scaleSequence = SKAction.sequence([changeColor, scaleUp, scaleDown, returnColor])
-        let scaleUp2 = SKAction.scale(to: 1.1, duration : 0.2)
-        let scaleDown2 = SKAction.scale(to: 1, duration: 0.2)
-        let changeColor2 = SKAction.colorize(with: UIColor.red, colorBlendFactor: 1, duration: 0)
-        let returnColor2 = SKAction.colorize(with: UIColor.white, colorBlendFactor: 1, duration: 0)
-        let scaleSequence2 = SKAction.sequence([changeColor2, scaleUp2, scaleDown2, returnColor2])
-        pointLifeLabel.run(scaleSequence)
-        xPointLifeLabel.run(scaleSequence2)
+        label.LifeMultip()
     }
     
     func gameStart () {
         currentGameState = gameState.inGame
         let deleteTapToBeginLabel = SKAction.removeFromParent()
-        tapToBeginLabel.run(deleteTapToBeginLabel)
+        label.tapToBeginLabel.run(deleteTapToBeginLabel)
         let moveShipToRightPosition = SKAction.moveTo(y: self.size.height/7, duration: 1.5)
         let startLevelAction = SKAction.run(parametersLevel)
         let startLevelSequence = SKAction.sequence([moveShipToRightPosition, startLevelAction])
@@ -593,6 +584,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if currentGameState == gameState.inGame {
             if lastUpdateTime == 0 {
                 lastUpdateTime = currentTime
+            
             }
             else {
                 deltaFrameTime = currentTime - lastUpdateTime

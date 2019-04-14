@@ -1,68 +1,68 @@
 //
 //  Option.swift
-//  Solar Shoot
+//  shooter
 //
-//  Created by Lucas Abijmil on 07/03/2019.
-//  Copyright © 2019 Lucas Abijmil. All rights reserved.
+//  Created by Mehir bitan on 03/04/2019.
+//  Copyright © 2019 Dovratt bitan. All rights reserved.
 //
-
 import Foundation
 import SpriteKit
 import GameplayKit
 
 class Option: SKScene {
-    override func didMove(to view: SKView) {
-        let option = SKSpriteNode(imageNamed: "Menu")
+    
+    //attributs déclaration des variables
+    let option = SKSpriteNode(imageNamed: "Menu")
+    let Name = SKLabelNode(fontNamed :"Starjedi")
+    let Name1 = SKLabelNode(fontNamed :"Starjedi")
+    let Bouton1 = SKLabelNode(fontNamed :"Starjedi")
+    let Bouton2 = SKLabelNode(fontNamed :"Starjedi")
+    let Bouton3 = SKLabelNode(fontNamed :"Starjedi")
+    //let musique = Music(musiqueActivee: musiqueActivee )
+    
+    //constructeur
+    override init (size: CGSize) {
+        super.init(size: size)
+        print(musiqueActivee)
+        //Permet d'avoir la musique sans appuyer sur le bouton musique si à la base la musique était déjà activée
+        if(musique.getMusiqueActivee()){
+            musique.playMusique()
+        }
+        
+        //affichage du fond d'écran
         option.position = CGPoint(x:self.size.width/2, y:self.size.height/2)
         option.zPosition = 0
         self.addChild(option)
         
-        let solar = SKLabelNode(fontNamed :"Starjedi")
-        solar.text = "Solar"
-        solar.fontSize = 200
-        solar.fontColor = SKColor.white
-        solar.position = CGPoint(x:self.size.width*0.5,y:self.size.height*0.8)
-        solar.zPosition = 1
-        self.addChild(solar)
+        affichageTexte(bouton: Name, text: "Solar", fontS: 200, xW: 0.5, yH: 0.8)
+        affichageTexte(bouton: Name1, text: "Shoot", fontS: 200, xW: 0.5, yH: 0.7)
+        affichageTexte(bouton: Bouton1, text: "son", fontS: 100, xW: 0.5, yH: 0.5)
+        Bouton1.name = "bouton1"
+        affichageTexte(bouton: Bouton2, text: "musique", fontS: 100, xW: 0.5, yH: 0.4)
+        Bouton2.name = "bouton2"
+        affichageTexte(bouton: Bouton3, text: "retour", fontS: 100, xW: 0.5, yH: 0.3)
+        Bouton3.name = "bouton3"
         
-        
-        let shoot = SKLabelNode(fontNamed :"Starjedi")
-        shoot.text = "Shoot"
-        shoot.fontSize = 200
-        shoot.fontColor = SKColor.white
-        shoot.position = CGPoint(x:self.size.width*0.5,y:self.size.height*0.7)
-        shoot.zPosition = 1
-        self.addChild(shoot)
-        
-        
-        let son = SKLabelNode(fontNamed :"Starjedi")
-        son.text = "son"
-        son.fontSize = 100
-        son.fontColor = SKColor.white
-        son.position = CGPoint(x:self.size.width*0.5,y:self.size.height*0.5)
-        son.zPosition = 1
-        son.name = "bouton1"
-        self.addChild(son)
-        
-        
-        let musique = SKLabelNode(fontNamed :"Starjedi")
-        musique.text = "musique"
-        musique.fontSize = 100
-        musique.fontColor = SKColor.white
-        musique.position = CGPoint(x:self.size.width*0.5,y:self.size.height*0.4)
-        musique.zPosition = 1
-        musique.name = "bouton2"
-        self.addChild(musique)
-        
-        
-        let retour = SKLabelNode(fontNamed :"Starjedi")
-        retour.text = "retour"
-        retour.fontSize = 100
-        retour.fontColor = SKColor.white
-        retour.position = CGPoint(x:self.size.width*0.5,y:self.size.height*0.3)
-        retour.zPosition = 1
-        retour.name = "bouton3"
-        self.addChild(retour)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func affichageTexte(bouton: SKLabelNode, text: String, fontS: Int, xW: CGFloat, yH: CGFloat){
+        bouton.text = text
+        bouton.fontSize = CGFloat(fontS)
+        bouton.fontColor = SKColor.white
+        bouton.position = CGPoint(x:self.size.width*xW,y:self.size.height*yH)
+        bouton.zPosition = 1
+        self.addChild(bouton)
+    }
+    
+    func transition(newScene: SKScene){
+        let scene = newScene
+        scene.scaleMode = self.scaleMode
+        let Transition = SKTransition.reveal(with: .down, duration: 1.5)
+        self.view!.presentScene(scene, transition:Transition)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>,
@@ -71,23 +71,26 @@ class Option: SKScene {
         
         for touch: AnyObject in touches{
             
-            
             let toucher = touch.location(in:self)
             let nodeTapped = atPoint (_:toucher)
             
+            if (nodeTapped.name  == "bouton2"){
+                if(musique.getMusiqueActivee()){
+                    musique.stopMusique()
+                    musiqueActivee = false
+                }
+                else{
+                    musique.playMusique()
+                    musiqueActivee = true
+                    
+                }
+                print(musiqueActivee)
+                
+            }
             
             if (nodeTapped.name  == "bouton3"){
-                
-                
-                let scene = MainmenuSolar(size: self.size)
-                scene.scaleMode = self.scaleMode
-                let Transition = SKTransition.reveal(with: .down, duration: 1.5)
-                self.view!.presentScene(scene, transition:Transition)
-                //planet menu selection to create and place
-                
-                
+                transition(newScene: MainmenuSolar(size: self.size))
             }
         }
     }
 }
-

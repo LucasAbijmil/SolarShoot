@@ -18,16 +18,24 @@ class Planet:SKSpriteNode {
         let texture = SKTexture(imageNamed : imageName)
         super.init(texture: texture, color: .clear, size: texture.size())
         
+       /* self.physicsBody = SKPhysicsBody(circleOfRadius: self.size.width/2, center: self.anchorPoint) //planet.physicsBody = SKPhysicsBody(rectangleOf: planet.size) // déclaration du contouring de la planète, demandé au prof pour le typede SKphysics
+        self.physicsBody!.affectedByGravity = false // on désactive la gravité pour la planète
+        self.physicsBody!.categoryBitMask = GameScene.physicsCategories.planet
+        self.physicsBody!.collisionBitMask = GameScene.physicsCategories.none
+        self.physicsBody!.contactTestBitMask = GameScene.physicsCategories.asteroid*/
+        
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    func phys(){
         self.physicsBody = SKPhysicsBody(circleOfRadius: self.size.width/2, center: self.anchorPoint) //planet.physicsBody = SKPhysicsBody(rectangleOf: planet.size) // déclaration du contouring de la planète, demandé au prof pour le typede SKphysics
         self.physicsBody!.affectedByGravity = false // on désactive la gravité pour la planète
         self.physicsBody!.categoryBitMask = GameScene.physicsCategories.planet
         self.physicsBody!.collisionBitMask = GameScene.physicsCategories.none
         self.physicsBody!.contactTestBitMask = GameScene.physicsCategories.asteroid
         
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
     
    func addPlanet(parent: GameScene) {
