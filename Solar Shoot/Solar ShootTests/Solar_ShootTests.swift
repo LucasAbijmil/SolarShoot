@@ -2,8 +2,8 @@
 //  Solar_ShootTests.swift
 //  Solar ShootTests
 //
-//  Created by lucas abijmil on 20/03/2019.
-//  Copyright © 2019 Lucas Abijmil. All rights reserved.
+//  Created by Projet L2R1 on 20/03/2019.
+//  Copyright © 2019 Projet L2R1. All rights reserved.
 //
 
 import XCTest

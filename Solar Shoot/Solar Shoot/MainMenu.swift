@@ -2,15 +2,15 @@
 //  MainMenu.swift
 //  shooter
 //
-//  Created by Mehir bitan on 03/04/2019.
-//  Copyright © 2019 Dovratt bitan. All rights reserved.
+//  Created by Projet L2R1 on 03/04/2019.
+//  Copyright © 2019 Projet L2R1. All rights reserved.
 //
 import Foundation
 import SpriteKit
 
 class MainmenuSolar:SKScene{
+    
     //attributs déclaration des variables
-    //let musique = Music(musiqueActivee: musiqueActivee)
     private let menu = SKSpriteNode(imageNamed: "Menu")
     private let Name = SKLabelNode(fontNamed :"Starjedi")
     private let Name1 = SKLabelNode(fontNamed :"Starjedi")
@@ -20,13 +20,13 @@ class MainmenuSolar:SKScene{
     
     override init (size: CGSize) {
         super.init(size: size)
-        print(musiqueActivee)
+        
         //Permet de mettre la musique en fonction de si on l'a activer ou non
         if(musique.getMusiqueActivee()){
-            musique.playMusique()
+            musique.playMusique(NameMusique: "MusiqueMenu")
         }
         else {
-            musique.stopMusique()
+            musique.stopMusique(NameMusique: "MusiqueMenu")
         }
         
         //affichage du fond d'écran

@@ -2,8 +2,8 @@
 //  Credits.swift
 //  Solar Shoot
 //
-//  Created by Lucas Abijmil on 07/03/2019.
-//  Copyright © 2019 Lucas Abijmil. All rights reserved.
+//  Created by Projet L2R1 on 07/03/2019.
+//  Copyright © 2019 Projet L2R1 . All rights reserved.
 //
 
 import Foundation
@@ -25,13 +25,13 @@ class Credits: SKScene {
     
     override init (size: CGSize) {
         super.init(size: size)
-        print(musiqueActivee)
+        
         //Permet de mettre la musique en fonction de si on l'a activer ou non
         if(musique.getMusiqueActivee()){
-            musique.playMusique()
+            musique.playMusique(NameMusique: "MusiqueOptionCredits")
         }
         else {
-            musique.stopMusique()
+            musique.stopMusique(NameMusique: "MusiqueOptionCredits")
         }
         
         //affichage du fond d'écran

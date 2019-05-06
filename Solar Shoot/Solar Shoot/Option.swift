@@ -13,9 +13,10 @@ class Option: SKScene {
     
     //attributs déclaration des variables
     let option = SKSpriteNode(imageNamed: "Menu")
+    let soundOnLabel = SKSpriteNode(imageNamed:"SoundOn")
+    let soundOffLabel = SKSpriteNode(imageNamed:"SoundOff")
     let Name = SKLabelNode(fontNamed :"Starjedi")
     let Name1 = SKLabelNode(fontNamed :"Starjedi")
-    let Bouton1 = SKLabelNode(fontNamed :"Starjedi")
     let Bouton2 = SKLabelNode(fontNamed :"Starjedi")
     let Bouton3 = SKLabelNode(fontNamed :"Starjedi")
     //let musique = Music(musiqueActivee: musiqueActivee )
@@ -23,10 +24,10 @@ class Option: SKScene {
     //constructeur
     override init (size: CGSize) {
         super.init(size: size)
-        print(musiqueActivee)
+        
         //Permet d'avoir la musique sans appuyer sur le bouton musique si à la base la musique était déjà activée
         if(musique.getMusiqueActivee()){
-            musique.playMusique()
+            musique.playMusique(NameMusique: "MusiqueOptionCredits")
         }
         
         //affichage du fond d'écran
@@ -34,10 +35,23 @@ class Option: SKScene {
         option.zPosition = 0
         self.addChild(option)
         
+        //affichage de l'icone son activé
+        soundOnLabel.setScale(0.2)
+        soundOnLabel.position = CGPoint(x: self.size.width/2.3 , y: self.size.height/2)
+        soundOnLabel.zPosition = 100
+        soundOnLabel.name="boutonOn"
+        self.addChild(soundOnLabel)
+        
+        //affichage de l'icone son désactivé
+        soundOffLabel.setScale(0.15)
+        soundOffLabel.position = CGPoint(x: self.size.width/1.7 , y: self.size.height/2)
+        soundOffLabel.zPosition = 100
+        soundOffLabel.name="boutonOff"
+        self.addChild(soundOffLabel)
+
+        
         affichageTexte(bouton: Name, text: "Solar", fontS: 200, xW: 0.5, yH: 0.8)
         affichageTexte(bouton: Name1, text: "Shoot", fontS: 200, xW: 0.5, yH: 0.7)
-        affichageTexte(bouton: Bouton1, text: "son", fontS: 100, xW: 0.5, yH: 0.5)
-        Bouton1.name = "bouton1"
         affichageTexte(bouton: Bouton2, text: "musique", fontS: 100, xW: 0.5, yH: 0.4)
         Bouton2.name = "bouton2"
         affichageTexte(bouton: Bouton3, text: "retour", fontS: 100, xW: 0.5, yH: 0.3)
@@ -74,20 +88,36 @@ class Option: SKScene {
             let toucher = touch.location(in:self)
             let nodeTapped = atPoint (_:toucher)
             
+            //si on clique sur l'icone  du son off , il se désactivra
+            if (nodeTapped.name  == "boutonOff"){
+                if(sons.getSonsActivee() == true){
+                    sonsActivee = false
+                    sons.setSonsActivee(valeur: false)
+                }
+            }
+            
+            //si on clique sur l'icone du son on , il s'activra
+            if (nodeTapped.name  == "boutonOn"){
+                if(sons.getSonsActivee() == false){
+                sonsActivee = true
+                sons.setSonsActivee(valeur: true)
+                }
+            }
+            
+            //si on clique sur la musique , elle se s'activra ou se désactivra
             if (nodeTapped.name  == "bouton2"){
                 if(musique.getMusiqueActivee()){
-                    musique.stopMusique()
+                    musique.stopMusique(NameMusique: "MusiqueOptionCredits")
                     musiqueActivee = false
                 }
                 else{
-                    musique.playMusique()
+                    musique.playMusique(NameMusique: "MusiqueOptionCredits")
                     musiqueActivee = true
-                    
                 }
-                print(musiqueActivee)
-                
             }
             
+    
+            //si on clique sur le bouton menu (bouton3) la scène du menu apparait
             if (nodeTapped.name  == "bouton3"){
                 transition(newScene: MainmenuSolar(size: self.size))
             }

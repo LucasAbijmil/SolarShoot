@@ -6,17 +6,19 @@
 //  Copyright © 2019 Projet-L2R1. All rights reserved.
 //
 
+//Classe pour afficher les missiles
+
 import Foundation
 import SpriteKit
 import GameplayKit
 
 class Bullet : SKSpriteNode {
-      
+    
+    //construteur
     init(imageName: String) {
         let texture = SKTexture(imageNamed: imageName)
         super.init(texture: texture, color: SKColor.clear, size: texture.size())
         self.name = "Bullet"
-        // bullet.name = "Bullet" //afin de permettre l'arrêt des missiles en cas de gameOver
         self.physicsBody = SKPhysicsBody(rectangleOf: self.size)
         self.physicsBody?.affectedByGravity = false
         self.physicsBody?.categoryBitMask = GameScene.physicsCategories.bullet

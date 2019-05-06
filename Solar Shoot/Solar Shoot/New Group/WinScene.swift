@@ -21,6 +21,7 @@ extension BinaryInteger {
         return Formatter.WithSeparatorGameOverScene.string(for: self) ?? ""
     }
 }
+
 class WinScene : SKScene {
     
     //attributs déclaration des variables
@@ -43,7 +44,7 @@ class WinScene : SKScene {
         endScene.zPosition = 0
         self.addChild(endScene)
         
-        affichageTexte(bouton: Name, text: "Bravo Niveau Réussi", fontS: 100, xW: 0.5, yH: 0.8)
+        affichageTexte(bouton: Name, text: "Niveau Réussi", fontS: 100, xW: 0.5, yH: 0.8)
         
         affichageTexte(bouton: scoreLabel, text: "Score : \(gameScoreString)", fontS: 100, xW: 0.5, yH: 0.6)
         
@@ -55,7 +56,7 @@ class WinScene : SKScene {
         let hightScoreString = highScoreNumber.formattedWithSeparatorGameOverScene
         affichageTexte(bouton: hightScoreLabel, text: "Meilleur score : \(hightScoreString)", fontS: 60, xW: 0.5, yH: 0.5)
         
-        affichageTexte(bouton: Bouton, text: "Niveau Suivant", fontS: 100, xW: 0.5, yH: 0.4)
+        affichageTexte(bouton: Bouton, text: "Carte", fontS: 100, xW: 0.5, yH: 0.4)
         Bouton.name = "bouton"
         
         affichageTexte(bouton: Bouton1, text: "Menu", fontS: 100, xW: 0.5, yH: 0.3)
@@ -90,6 +91,72 @@ class WinScene : SKScene {
             let nodeTapped = atPoint (_:toucher)
             
             if (nodeTapped.name  == "bouton"){
+                
+                switch lvlNumber {
+                    
+                case 1 :
+                    
+                    if lvlSelected == lvlNumber { lvlNumber += 1}
+                    
+                    transition(newScene: Carte(size: self.size))
+                    
+                    break
+                    
+                case 2 :
+                    
+                    if lvlSelected == lvlNumber { lvlNumber += 1}
+                    
+                    transition(newScene: Carte(size: self.size))
+                    
+                    break
+                    
+                case 3 :
+                    
+                    if lvlSelected == lvlNumber { lvlNumber += 1}
+                    
+                    transition(newScene: Carte(size: self.size))
+                    
+                    break
+                    
+                case 4 :
+                    
+                    if lvlSelected == lvlNumber { lvlNumber += 1}
+                    
+                    transition(newScene: Carte(size: self.size))
+                    
+                    break
+                    
+                case 5 :
+                    
+                    if lvlSelected == lvlNumber { lvlNumber += 1}
+                    
+                    transition(newScene: Carte(size: self.size))
+                    
+                    break
+                    
+                case 6 :
+                    
+                    if lvlSelected == lvlNumber { lvlNumber += 1}
+                    
+                    transition(newScene: Carte(size: self.size))
+                    
+                    break
+                    
+                case 7 :
+                    
+                    if lvlSelected == lvlNumber { lvlNumber += 1}
+                    
+                    transition(newScene: Carte(size: self.size))
+                    
+                    break
+                    
+                default :
+                    
+                    transition(newScene: Carte(size: self.size))
+                    
+                    break
+                    
+                }
                 
             }
             

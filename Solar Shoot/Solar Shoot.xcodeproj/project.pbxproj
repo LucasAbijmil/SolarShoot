@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1F2CD2632267770E000CFCC7 /* WinSceneFinal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2CD2622267770E000CFCC7 /* WinSceneFinal.swift */; };
+		1F2CD2652267772E000CFCC7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1F2CD2642267772E000CFCC7 /* Assets.xcassets */; };
+		1F2CD26722677925000CFCC7 /* MusiqueGameScene.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 1F2CD26622677925000CFCC7 /* MusiqueGameScene.mp3 */; };
 		8D663E142242E51D0011DD18 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D663E132242E51D0011DD18 /* AppDelegate.swift */; };
 		8D663E162242E51D0011DD18 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 8D663E152242E51D0011DD18 /* GameScene.sks */; };
 		8D663E182242E51D0011DD18 /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = 8D663E172242E51D0011DD18 /* Actions.sks */; };
@@ -24,7 +27,6 @@
 		8D663E532242E7E10011DD18 /* Credit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D663E522242E7E10011DD18 /* Credit.swift */; };
 		8D663E552242E8410011DD18 /* GameOverScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D663E542242E8410011DD18 /* GameOverScene.swift */; };
 		8D663E572242E9340011DD18 /* Option.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D663E562242E9340011DD18 /* Option.swift */; };
-		8D663E5922430BB00011DD18 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8D663E5822430BB00011DD18 /* Assets.xcassets */; };
 		8DE70E2A225CDBBC000C4D14 /* DevScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE70E29225CDBBC000C4D14 /* DevScene.swift */; };
 		8DE70E2C225CDDBA000C4D14 /* ArtistsScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE70E2B225CDDBA000C4D14 /* ArtistsScene.swift */; };
 		8DE70E2E225CDE17000C4D14 /* ThanksScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE70E2D225CDE17000C4D14 /* ThanksScene.swift */; };
@@ -32,13 +34,16 @@
 		8DE70E3A225F9E51000C4D14 /* ExitScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE70E39225F9E51000C4D14 /* ExitScene.swift */; };
 		8DE70E3C225F9EA2000C4D14 /* Music.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE70E3B225F9EA2000C4D14 /* Music.swift */; };
 		8DE70E3E225F9ED4000C4D14 /* WinScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE70E3D225F9ED4000C4D14 /* WinScene.swift */; };
-		8DE70E40225FA200000C4D14 /* Sound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8DE70E3F225FA200000C4D14 /* Sound.mp3 */; };
 		B57271DB225BD5D7007F239F /* Asteroid.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57271DA225BD5D7007F239F /* Asteroid.swift */; };
 		B57271DD225BD610007F239F /* Background.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57271DC225BD610007F239F /* Background.swift */; };
-		B57271E5225E7F7E007F239F /* Level.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57271E4225E7F7E007F239F /* Level.swift */; };
 		B57271EB225E9353007F239F /* Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57271EA225E9353007F239F /* Label.swift */; };
 		B5781CFE225AB27C00D40FA0 /* Bullet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5781CFD225AB27C00D40FA0 /* Bullet.swift */; };
 		B5781D00225AB4B300D40FA0 /* Planet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5781CFF225AB4B300D40FA0 /* Planet.swift */; };
+		BC54CBFF2266590600043AD2 /* NextLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC54CBFE2266590600043AD2 /* NextLevel.swift */; };
+		BC54CC0C226688D600043AD2 /* Sons.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC54CC0B226688D600043AD2 /* Sons.swift */; };
+		BC54CC142266A59A00043AD2 /* MusiqueMenu.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BC54CC132266A59A00043AD2 /* MusiqueMenu.mp3 */; };
+		BC54CC162266A5BA00043AD2 /* MusiqueCarte.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BC54CC152266A5BA00043AD2 /* MusiqueCarte.mp3 */; };
+		BC54CC182266A66C00043AD2 /* MusiqueOptionCredits.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BC54CC172266A66B00043AD2 /* MusiqueOptionCredits.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +64,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1F2CD2622267770E000CFCC7 /* WinSceneFinal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WinSceneFinal.swift; sourceTree = "<group>"; };
+		1F2CD2642267772E000CFCC7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		1F2CD26622677925000CFCC7 /* MusiqueGameScene.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = MusiqueGameScene.mp3; sourceTree = SOURCE_ROOT; };
 		8D663E102242E51D0011DD18 /* Solar Shoot.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Solar Shoot.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D663E132242E51D0011DD18 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8D663E152242E51D0011DD18 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -82,21 +90,23 @@
 		8D663E522242E7E10011DD18 /* Credit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Credit.swift; sourceTree = "<group>"; };
 		8D663E542242E8410011DD18 /* GameOverScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GameOverScene.swift; path = ../GameOverScene.swift; sourceTree = "<group>"; };
 		8D663E562242E9340011DD18 /* Option.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Option.swift; sourceTree = "<group>"; };
-		8D663E5822430BB00011DD18 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8DE70E29225CDBBC000C4D14 /* DevScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevScene.swift; sourceTree = "<group>"; };
 		8DE70E2B225CDDBA000C4D14 /* ArtistsScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistsScene.swift; sourceTree = "<group>"; };
 		8DE70E2D225CDE17000C4D14 /* ThanksScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThanksScene.swift; sourceTree = "<group>"; };
-		8DE70E37225F8D2D000C4D14 /* PlanetLife.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PlanetLife.swift; path = ../PlanetLife.swift; sourceTree = "<group>"; };
+		8DE70E37225F8D2D000C4D14 /* PlanetLife.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanetLife.swift; sourceTree = "<group>"; };
 		8DE70E39225F9E51000C4D14 /* ExitScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExitScene.swift; sourceTree = "<group>"; };
 		8DE70E3B225F9EA2000C4D14 /* Music.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Music.swift; sourceTree = "<group>"; };
 		8DE70E3D225F9ED4000C4D14 /* WinScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WinScene.swift; path = "../New Group/WinScene.swift"; sourceTree = "<group>"; };
-		8DE70E3F225FA200000C4D14 /* Sound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Sound.mp3; sourceTree = "<group>"; };
 		B57271DA225BD5D7007F239F /* Asteroid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Asteroid.swift; path = ../Asteroid.swift; sourceTree = "<group>"; };
 		B57271DC225BD610007F239F /* Background.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Background.swift; sourceTree = "<group>"; };
-		B57271E4225E7F7E007F239F /* Level.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Level.swift; sourceTree = "<group>"; };
 		B57271EA225E9353007F239F /* Label.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Label.swift; sourceTree = "<group>"; };
 		B5781CFD225AB27C00D40FA0 /* Bullet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Bullet.swift; path = ../Bullet.swift; sourceTree = "<group>"; };
 		B5781CFF225AB4B300D40FA0 /* Planet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Planet.swift; path = ../Planet.swift; sourceTree = "<group>"; };
+		BC54CBFE2266590600043AD2 /* NextLevel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextLevel.swift; sourceTree = "<group>"; };
+		BC54CC0B226688D600043AD2 /* Sons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sons.swift; sourceTree = "<group>"; };
+		BC54CC132266A59A00043AD2 /* MusiqueMenu.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = MusiqueMenu.mp3; sourceTree = "<group>"; };
+		BC54CC152266A5BA00043AD2 /* MusiqueCarte.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = MusiqueCarte.mp3; sourceTree = "<group>"; };
+		BC54CC172266A66B00043AD2 /* MusiqueOptionCredits.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = MusiqueOptionCredits.mp3; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -152,24 +162,26 @@
 				8D663E152242E51D0011DD18 /* GameScene.sks */,
 				8D663E172242E51D0011DD18 /* Actions.sks */,
 				8D663E192242E51D0011DD18 /* GameScene.swift */,
-				8DE70E39225F9E51000C4D14 /* ExitScene.swift */,
-				B57271E4225E7F7E007F239F /* Level.swift */,
-				B57271DC225BD610007F239F /* Background.swift */,
-				8DE70E37225F8D2D000C4D14 /* PlanetLife.swift */,
 				8D663E1B2242E51D0011DD18 /* GameViewController.swift */,
+				8DE70E39225F9E51000C4D14 /* ExitScene.swift */,
 				8D663E4A2242E7470011DD18 /* MainMenu.swift */,
+				8D663E562242E9340011DD18 /* Option.swift */,
+				BC54CC0B226688D600043AD2 /* Sons.swift */,
 				8DE70E3B225F9EA2000C4D14 /* Music.swift */,
 				8D663E502242E7950011DD18 /* Carte.swift */,
+				BC54CBFE2266590600043AD2 /* NextLevel.swift */,
 				8DE70E43225FDA91000C4D14 /* Items */,
 				8DE70E42225FDA33000C4D14 /* WinScene - GameOverScene */,
 				8DE70E2F225CDE2C000C4D14 /* Credit */,
-				8D663E562242E9340011DD18 /* Option.swift */,
-				8D663E5822430BB00011DD18 /* Assets.xcassets */,
+				BC54CC152266A5BA00043AD2 /* MusiqueCarte.mp3 */,
+				BC54CC172266A66B00043AD2 /* MusiqueOptionCredits.mp3 */,
+				BC54CC132266A59A00043AD2 /* MusiqueMenu.mp3 */,
+				8D663E4D2242E76D0011DD18 /* Bulletsong.mp3 */,
+				8D663E4C2242E76D0011DD18 /* Explosionsong.mp3 */,
+				1F2CD26622677925000CFCC7 /* MusiqueGameScene.mp3 */,
+				1F2CD2642267772E000CFCC7 /* Assets.xcassets */,
 				8D663E1D2242E51D0011DD18 /* Main.storyboard */,
 				8D663E222242E51E0011DD18 /* LaunchScreen.storyboard */,
-				8D663E4D2242E76D0011DD18 /* Bulletsong.mp3 */,
-				8DE70E3F225FA200000C4D14 /* Sound.mp3 */,
-				8D663E4C2242E76D0011DD18 /* Explosionsong.mp3 */,
 				8D663E252242E51E0011DD18 /* Info.plist */,
 			);
 			path = "Solar Shoot";
@@ -225,6 +237,7 @@
 			children = (
 				8D663E542242E8410011DD18 /* GameOverScene.swift */,
 				8DE70E3D225F9ED4000C4D14 /* WinScene.swift */,
+				1F2CD2622267770E000CFCC7 /* WinSceneFinal.swift */,
 			);
 			name = "WinScene - GameOverScene";
 			path = Credit;
@@ -235,6 +248,8 @@
 			children = (
 				B57271EA225E9353007F239F /* Label.swift */,
 				B5781CFF225AB4B300D40FA0 /* Planet.swift */,
+				B57271DC225BD610007F239F /* Background.swift */,
+				8DE70E37225F8D2D000C4D14 /* PlanetLife.swift */,
 				B5781CFD225AB27C00D40FA0 /* Bullet.swift */,
 				B57271DA225BD5D7007F239F /* Asteroid.swift */,
 			);
@@ -346,15 +361,18 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1F2CD26722677925000CFCC7 /* MusiqueGameScene.mp3 in Resources */,
 				8D663E1F2242E51D0011DD18 /* Main.storyboard in Resources */,
+				BC54CC162266A5BA00043AD2 /* MusiqueCarte.mp3 in Resources */,
+				BC54CC142266A59A00043AD2 /* MusiqueMenu.mp3 in Resources */,
+				1F2CD2652267772E000CFCC7 /* Assets.xcassets in Resources */,
 				8D663E162242E51D0011DD18 /* GameScene.sks in Resources */,
 				8D663E4F2242E76D0011DD18 /* Bulletsong.mp3 in Resources */,
 				8D663E242242E51E0011DD18 /* LaunchScreen.storyboard in Resources */,
 				8D663E492242E6D70011DD18 /* Starjedi.ttf in Resources */,
 				8D663E4E2242E76D0011DD18 /* Explosionsong.mp3 in Resources */,
-				8D663E5922430BB00011DD18 /* Assets.xcassets in Resources */,
 				8D663E182242E51D0011DD18 /* Actions.sks in Resources */,
-				8DE70E40225FA200000C4D14 /* Sound.mp3 in Resources */,
+				BC54CC182266A66C00043AD2 /* MusiqueOptionCredits.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -379,15 +397,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B57271E5225E7F7E007F239F /* Level.swift in Sources */,
 				8D663E572242E9340011DD18 /* Option.swift in Sources */,
 				8D663E532242E7E10011DD18 /* Credit.swift in Sources */,
 				8DE70E3E225F9ED4000C4D14 /* WinScene.swift in Sources */,
+				1F2CD2632267770E000CFCC7 /* WinSceneFinal.swift in Sources */,
 				8DE70E3A225F9E51000C4D14 /* ExitScene.swift in Sources */,
 				8DE70E2E225CDE17000C4D14 /* ThanksScene.swift in Sources */,
 				8D663E1A2242E51D0011DD18 /* GameScene.swift in Sources */,
 				B57271DB225BD5D7007F239F /* Asteroid.swift in Sources */,
 				8DE70E3C225F9EA2000C4D14 /* Music.swift in Sources */,
+				BC54CBFF2266590600043AD2 /* NextLevel.swift in Sources */,
 				8D663E552242E8410011DD18 /* GameOverScene.swift in Sources */,
 				8D663E1C2242E51D0011DD18 /* GameViewController.swift in Sources */,
 				8DE70E2A225CDBBC000C4D14 /* DevScene.swift in Sources */,
@@ -395,6 +414,7 @@
 				8D663E4B2242E7470011DD18 /* MainMenu.swift in Sources */,
 				8D663E512242E7950011DD18 /* Carte.swift in Sources */,
 				B5781CFE225AB27C00D40FA0 /* Bullet.swift in Sources */,
+				BC54CC0C226688D600043AD2 /* Sons.swift in Sources */,
 				B57271EB225E9353007F239F /* Label.swift in Sources */,
 				8DE70E2C225CDDBA000C4D14 /* ArtistsScene.swift in Sources */,
 				8DE70E38225F8D2D000C4D14 /* PlanetLife.swift in Sources */,
@@ -577,6 +597,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = P2HRGX54G3;
 				INFOPLIST_FILE = "Solar Shoot/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -595,6 +616,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = P2HRGX54G3;
 				INFOPLIST_FILE = "Solar Shoot/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

@@ -2,8 +2,8 @@
 //  Musique.swift
 //  shooter
 //
-//  Created by Mehir bitan on 03/04/2019.
-//  Copyright © 2019 Dovratt bitan. All rights reserved.
+//  Created by Projet L2R1 on 03/04/2019.
+//  Copyright © 2019 Projet L2R1. All rights reserved.
 //
 import Foundation
 import UIKit
@@ -27,9 +27,10 @@ class Music {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func musique(){
+    //musique
+    func musique(NameMusique: String){
         //quelle son on veut choisir
-        let filePath = Bundle.main.path(forResource: "Sound", ofType: "mp3")
+        let filePath = Bundle.main.path(forResource: NameMusique, ofType: "mp3")
         
         //extraction de l'audio
         let audioNSURL = NSURL.init(fileURLWithPath: filePath!)
@@ -46,21 +47,27 @@ class Music {
         backingAudio.numberOfLoops = -1
         
     }
-    public func playMusique(){
-        musique()
+    
+    //La musique se met en marche
+    public func playMusique(NameMusique: String){
+        musique(NameMusique: NameMusique)
         backingAudio.play()
         setMusiqueActivee(valeur: true)
     }
-    public func stopMusique (){
-        musique()
+    
+    //la musique s'arrete
+    public func stopMusique (NameMusique: String){
+        musique(NameMusique: NameMusique)
         backingAudio.stop()
         setMusiqueActivee(valeur: false)
     }
     
+    //Permet de savoir si la musique est activée
     public func getMusiqueActivee() -> Bool{
         return musiqueActivee
     }
     
+    //Modifie la valeur de musiqueActivee par la valeur entrée en paramètre
     public func setMusiqueActivee(valeur: Bool) {
         musiqueActivee = valeur
     }

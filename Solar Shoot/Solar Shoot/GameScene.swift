@@ -2,8 +2,8 @@
 //  GameScene.swift
 //  Solar Shoot V1
 //
-//  Created by L2R1 on 19/02/2019.
-//  Copyright © 2019 Lucas Abijmil. All rights reserved.
+//  Created by Projet L2R1 on 19/02/2019.
+//  Copyright © 2019 Projet L2R1. All rights reserved.
 //
 
 import SpriteKit
@@ -22,20 +22,20 @@ extension BinaryInteger {
     }
 }
 
-var gameScore = 0 //Cette variable est publique à toutes les scenes
-var lvlNumber : Int = 5
+var gameScore = 0 //Cette variable est publique à toutes les scene
+var lvlNumber : Int = 1
 var lvlRequired : Int = 1
 let gameScoreString = gameScore.formattedWithSeparatorGameScene
 let musique = Music(musiqueActivee: musiqueActivee)
-var stopLabel = SKSpriteNode(imageNamed:"play")
-let exitLabel = SKSpriteNode(imageNamed:"exit")
+let sons = Sons(sonsActivee: sonsActivee)
+
+
+
 class GameScene: SKScene, SKPhysicsContactDelegate {
+
+    //déclaration de variables
+    
     private var play : Bool
-    
-    
- /**********************************************************************************************************************************************************************************\
-                                                        Declaration of general var
-\***********************************************************************************************************************************************************************************/
     
     //On déclare toutes les planètes en fonctions des niveaux
     public var planet = Planet(imageName: "Planet")
@@ -46,43 +46,35 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     private var planetLvlII = PlanetLife(image: "Venus")
     private var planetLvl2 = Planet(imageName: "Venus")
-    
+
     private var planetLvlIII = PlanetLife(image: "Terre")
     private var planetLvl3 = Planet(imageName: "Terre")
-    
+
     private var planetLvlIV = PlanetLife(image: "Mars")
     private var planetLvl4 = Planet(imageName: "Mars")
-    
+
     private var planetLvlV = PlanetLife(image: "Jupiter")
     private var planetLvl5 = Planet(imageName: "Jupiter")
-    
+
     private var planetLvlVI = PlanetLife(image: "Saturne")
     private var planetLvl6 = Planet(imageName: "Saturne")
-    
+
     private var planetLvlVII = PlanetLife(image: "Uranus")
     private var planetLvl7 = Planet(imageName: "Uranus")
-    
+
     private var planetLvlVIII = PlanetLife(image: "Neptune")
     private var planetLvl8 = Planet(imageName: "Neptune")
-    
+
 
     private var bullet = Bullet(imageName: "Bullet")
-    
- //   private var background = Background(imageName: "BackgroundTest")
     private var asteroide = Asteroides(img: "Asteroid")
     
-    
     private var label = Label()
-   
     
+    var stopLabel = SKSpriteNode(imageNamed:"Pause")
+    let exitLabel = SKSpriteNode(imageNamed:"exit")
     
-    // let back = SKSpriteNode(imageNamed: "Background")
-   
-    
-    
-    let bulletSound = SKAction.playSoundFileNamed("Bulletsong.mp3", waitForCompletion: false)
-    let explosionSound = SKAction.playSoundFileNamed("Explosionsong.mp3", waitForCompletion: false)
-    enum gameState { // Pe rmet de dire dans quel état est le jeu
+    enum gameState { // Permet de dire dans quel état est le jeu
         case preGame // avant le début du niveau
         case inGame // pendant le niveau
         case StopedGame // si le joueur fait pause
@@ -96,22 +88,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         static let asteroid: UInt32 = 0b100 // 4 en binaire
     }
     
-    
-    //var gameScore = 0 ––> Placé en public afin que les menus GameOver / Win puissent y accéder
-    /*var gameScoreLabel = SKLabelNode(fontNamed: "Starjedi")*/
     var pointLife = 3
-   /* let planetLife = SKSpriteNode(imageNamed: "Planet")
-    var pointLifeLabel = SKLabelNode(fontNamed: "Starjedi")
-    var xPointLifeLabel = SKLabelNode(fontNamed: "Starjedi")
-    let tapToBeginLabel = SKLabelNode(fontNamed: "Starjedi")*/
+    private var fireBool = false
+    private var fireInterval: Double = 0.1
     private var updateTime: Double = 0
     var lastUpdateTime : TimeInterval = 0
     var deltaFrameTime : TimeInterval = 0
     var amountToMovePerSecond : CGFloat = 800.0
-    
-/**********************************************************************************************************************************************************************************\
-                                                            Declaration Game Area, Background, Planet
-\***********************************************************************************************************************************************************************************/
     
     let gameArea : CGRect
     override init (size : CGSize) {
@@ -128,25 +111,73 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
    
+    func Level(x:Int,eparpillement:Double) {
+        let spawn = SKAction.run(asteroids)//Crée une action qui exécute un bloc, ici les asteroides
+        let waitSpawn = SKAction.wait(forDuration: eparpillement)//Chaque seconde un nouvel asteroides tombe
+        let sequence = SKAction.sequence([waitSpawn,spawn])//sequence:asteroides+attendre 0.8 sec
+        let spawnForever = SKAction.repeat(sequence, count: x)//Pour repeter la sequence
+        self.run(spawnForever, completion: {() -> Void in self.transition(newScene: WinScene(size: self.size))})
+      
+    }
+    
+    
+    func transition(newScene: SKScene){
+        let scene = newScene
+        scene.scaleMode = self.scaleMode
+        let Transition = SKTransition.reveal(with: .down, duration: 1.5)
+        self.view!.presentScene(scene, transition:Transition)
+    }
+    
+    //caractéristiques de chaque niveau
+    func LevelCaracteristic(){
+        switch lvlSelected {
+        case 1 :
+            Level(x:100, eparpillement: 0.6)
+            break
+        case 2 :
+            Level(x:150, eparpillement: 0.55)
+            break
+        case 3 :
+            Level(x:200, eparpillement: 0.50)
+            break
+        case 4 :
+            Level(x:250, eparpillement: 0.45)
+            break
+        case 5 :
+            Level(x:300, eparpillement: 0.40)
+            break
+        case 6 :
+            Level(x:350, eparpillement: 0.35)
+            break
+        case 7 :
+            Level(x:400, eparpillement: 0.30)
+            break
+        case 8 :
+            Level(x:450, eparpillement: 0.20)
+            break
+        default :
+            planet.addPlanet(parent: self)
+            planet.phys()
+            planetIcon.addPlanet(parent: self)
+            break
+        }
+    }
+    
     
     override func didMove(to view: SKView) {
+     
         //Permet de mettre la musique en fonction de si on l'a activer ou non
         if(musique.getMusiqueActivee()){
-            musique.playMusique()
+            musique.playMusique(NameMusique: "MusiqueGameScene")
         }
         else {
-            musique.stopMusique()
+            musique.stopMusique(NameMusique: "MusiqueGameScene")
         }
         gameScore = 0 //On réinitialise le gameScore à 0, sinon "garderait" le score d'avant
         self.physicsWorld.contactDelegate = self
-        /*func afficher(planet:Planet,planetIcon:PlanetLife){
-            self.planet = planet
-            planet.addPlanet(parent: self)
-            planet.phys()
-            self.planetIcon = planetIcon
-            planetIcon.addPlanet(parent: self)
-        }*/
+    
         for i in 0...1 {
             func AffichageBack(background:SKSpriteNode){
                 background.size = self.size
@@ -157,6 +188,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 background.name = "Background"
                 self.addChild(background)
             }
+            //Affichage de background différents pour chaque niveau
             switch lvlSelected {
             case 1 :
                 let background = SKSpriteNode(imageNamed: "Fond_Mercure")
@@ -197,10 +229,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
             }
         }
-            //Utilisation classe background
-            //background.jeuBackground(parent: self) //ne sert a rien, ya tt juste au-dessus
-            //background.scrolling(image: back, parent: self)//thread
-       
+            //Affichage de planètes différentes pour chaque niveau
            switch lvlSelected {
             case 1 :
                 label.afficherPlanet(parent:self,planet:planetLvl1,planetIcon:planetLvlI)
@@ -232,7 +261,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 planetIcon.addPlanet(parent: self)
                 break
             }
+       
         
+     
+        //Affichage vies
         label.AffichageLabel(label: label.gameScoreLabel, text: "0", fontS: 50, horAlign: SKLabelHorizontalAlignmentMode.left, xW: 0.20,parent: self)
         label.AffichageLabel(label: label.xPointLifeLabel, text: "x", fontS: 30, horAlign: SKLabelHorizontalAlignmentMode.right, xW: 0.73,parent: self)
         label.AffichageLabel(label: label.pointLifeLabel, text: "3", fontS: 50, horAlign: SKLabelHorizontalAlignmentMode.right, xW: 0.75,parent: self)
@@ -246,21 +278,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         label.phrasePreGame(parent:self,label : label.tapToBeginLabel)
         
-        //fonctionne pas parfaitement
         let scrollRightToLeft = SKAction.moveTo(x: -self.size.width*0.5, duration: 8)
         let resetScroll = SKAction.moveTo(x: label.tapToBeginLabel.position.x, duration: 0)
         let scrollSequence = SKAction.sequence([scrollRightToLeft, resetScroll])
         let scrollSequenceRepeat = SKAction.repeatForever(scrollSequence)
         label.tapToBeginLabel.run(scrollSequenceRepeat)
         
-        stopLabel.setScale(0.4)
-        //stopLabel.position = CGPoint(x: self.size.width*0.2 , y: self.size.height*1.25)
-        stopLabel.position = CGPoint(x: self.size.width/2 , y: self.size.height/18)
+        stopLabel.setScale(0.20)
+        stopLabel.position = CGPoint(x: self.size.width/1.3 , y: self.size.height/18)
         stopLabel.zPosition = 100
         stopLabel.name="boutonPause"
         self.addChild(stopLabel)
         
-        exitLabel.setScale(0.1)
+        exitLabel.setScale(0.05)
         exitLabel.position = CGPoint(x: self.size.width/4 , y: self.size.height/18)
         exitLabel.zPosition = 100
         exitLabel.name="boutonExit"
@@ -270,7 +300,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
 /***********************************************************************************************************************************************************************************\
-                                                                    Declaration Bullet, func FireBullet
+                                                                    Declaration func FireBullet
 \***********************************************************************************************************************************************************************************/
     
     
@@ -289,8 +319,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.addChild(bullet)
         let moveBullet = SKAction.moveTo(y: self.size.height + bullet.size.height, duration: 1.0)
         let deleteBullet = SKAction.removeFromParent()
-        let bulletSequence = SKAction.sequence([bulletSound, moveBullet, deleteBullet])
-        bullet.run(bulletSequence)
+        if(sons.getSonsActivee()){
+            let bulletSequence = SKAction.sequence([sons.getBulletSound(), moveBullet, deleteBullet])
+            bullet.run(bulletSequence)
+        }
+        else{
+            print("else:",sonsActivee)
+            let bulletSequence = SKAction.sequence([moveBullet, deleteBullet])
+            bullet.run(bulletSequence)
+        }
     }
     
     
@@ -300,8 +337,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if currentGameState == gameState.preGame {
             gameStart()
         }
-       else if currentGameState == gameState.inGame {
-            fireBullet()
+        else if currentGameState == gameState.inGame {
+            fireBool = true
         }
         for touch: AnyObject in touches{
             let toucher = touch.location(in:self)
@@ -314,9 +351,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                         self.view?.isPaused = true
                     }
                     self.run(pauseAction)
-                    stopLabel = SKSpriteNode(imageNamed:"pause")
-                    stopLabel.setScale(0.4)
-                    stopLabel.position = CGPoint(x: self.size.width/2 , y: self.size.height/18)
+                    stopLabel = SKSpriteNode(imageNamed:"Pause")
+                    stopLabel.setScale(0.20)
+                    stopLabel.position = CGPoint(x: self.size.width/1.3, y: self.size.height/18)
                     stopLabel.zPosition = 100
                     stopLabel.name="boutonPause"
                     self.addChild(stopLabel)
@@ -325,9 +362,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 else{
                     play=true
                     self.view?.isPaused = false
-                    stopLabel = SKSpriteNode(imageNamed:"play")
-                    stopLabel.setScale(0.4)
-                    stopLabel.position = CGPoint(x: self.size.width/2 , y: self.size.height/18)
+                    stopLabel = SKSpriteNode(imageNamed:"Pause")
+                    stopLabel.setScale(0.20)
+                    stopLabel.position = CGPoint(x: self.size.width/1.3 , y: self.size.height/18)
                     stopLabel.zPosition = 100
                     stopLabel.name="boutonPause"
                     self.addChild(stopLabel)
@@ -346,6 +383,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 /***********************************************************************************************************************************************************************************\
                                                                         Move Planet
 \***********************************************************************************************************************************************************************************/
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        fireBool = false
+    }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         for touch : AnyObject in touches {
@@ -393,13 +434,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         asteroide.addAsteroid(parent: self)
      }*/ //Fonction pour utiliser la classe asteroide : crée un thread
     
-    func parametersLevel(){
+    /*func parametersLevel(){
         let spawn = SKAction.run(asteroids)//Crée une action qui exécute un bloc, ici les asteroides
         let waitSpawn = SKAction.wait(forDuration: 0.8)//Chaque seconde un nouvel asteroides tombe
         let sequence = SKAction.sequence([waitSpawn,spawn])//sequence:asteroides+attendre 0.8 sec
         let spawnForever = SKAction.repeatForever(sequence)//Pour repeter la sequence
         self.run(spawnForever)//executer la sequence
-    }
+    }*/
     
     func asteroids () {
         let asteroid = SKSpriteNode(imageNamed: "Asteroid")
@@ -422,7 +463,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.addChild(asteroid)
         
         
-        let moveAsteroid = SKAction.move(to: end, duration: 3.5)
+        let moveAsteroid = SKAction.move(to: end, duration: 2.5)
         let deleteAsteroid = SKAction.removeFromParent()
         let asteroidSeq = SKAction.sequence([moveAsteroid,deleteAsteroid])
         
@@ -505,8 +546,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let scaleIn = SKAction.scale(to: 0.9, duration: 0.2)
         let fadeOut = SKAction.fadeOut(withDuration: 0.1)
         let deleteExplosion = SKAction.removeFromParent()
-        let explosionSequence = SKAction.sequence([explosionSound, scaleIn, fadeOut, deleteExplosion])
-        explosion.run(explosionSequence)
+        if(sons.getSonsActivee()){
+            let explosionSequence = SKAction.sequence([sons.getExplosionSound(), scaleIn, fadeOut, deleteExplosion])
+            explosion.run(explosionSequence)
+        }
+        else{
+            let explosionSequence = SKAction.sequence([scaleIn, fadeOut, deleteExplosion])
+            explosion.run(explosionSequence)
+        }
         
     }
     
@@ -516,7 +563,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 \***********************************************************************************************************************************************************************************/
     
     func addScore () {
-        gameScore += 1000
+        gameScore += 1
         label.gameScoreLabel.text = "\(gameScore.formattedWithSeparatorGameScene)"
     }
     
@@ -531,12 +578,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         label.LifeMultip()
     }
     
-    func gameStart () {
+   func gameStart () {
         currentGameState = gameState.inGame
         let deleteTapToBeginLabel = SKAction.removeFromParent()
         label.tapToBeginLabel.run(deleteTapToBeginLabel)
         let moveShipToRightPosition = SKAction.moveTo(y: self.size.height/7, duration: 1.5)
-        let startLevelAction = SKAction.run(parametersLevel)
+        let startLevelAction = SKAction.run(LevelCaracteristic)
         let startLevelSequence = SKAction.sequence([moveShipToRightPosition, startLevelAction])
         planet.run(startLevelSequence)
     }
@@ -578,19 +625,30 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 \***********************************************************************************************************************************************************************************/
     
     
-    
     override func update(_ currentTime: TimeInterval) {
-     
+        guard fireBool else { return }
+        
+        
+        /*  if updateTime == 0 {
+         updateTime = currentTime
+         }*/
+        
+        if currentTime - updateTime > fireInterval {
+            self.fireBullet()
+            updateTime = currentTime
+        }
+        
         if currentGameState == gameState.inGame {
             if lastUpdateTime == 0 {
                 lastUpdateTime = currentTime
-            
+                updateTime = currentTime
+                
             }
             else {
                 deltaFrameTime = currentTime - lastUpdateTime
                 lastUpdateTime =  currentTime
             }
-        
+            
             let amounToMoveBackground = amountToMovePerSecond * CGFloat(deltaFrameTime)
             self.enumerateChildNodes(withName: "Background") {
                 (background, stop) in
@@ -600,6 +658,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 }
             }
         }
+        
     }
 }
 

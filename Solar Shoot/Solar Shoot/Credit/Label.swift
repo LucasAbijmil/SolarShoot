@@ -2,10 +2,11 @@
 //  Label.swift
 //  Solar Shoot
 //
-//  Created by Hanna on 10/04/2019.
-//  Copyright © 2019 Lucas Abijmil. All rights reserved.
+//  Created by Projet L2R1 on 10/04/2019.
+//  Copyright © 2019 Projet L2R1. All rights reserved.
 //
 
+//Classe qui permet d'alléger le code de la GameScene
 import Foundation
 import SpriteKit
 class Label{
@@ -16,6 +17,7 @@ class Label{
     public var xPointLifeLabel = SKLabelNode(fontNamed: "Starjedi")
     public let tapToBeginLabel = SKLabelNode(fontNamed: "Starjedi")
     
+    //Pour afficher la planète du joueur et des vies
     func afficherPlanet(parent: GameScene,planet:Planet,planetIcon:PlanetLife){
         parent.planet = planet
         planet.addPlanet(parent: parent)
@@ -24,7 +26,7 @@ class Label{
         planetIcon.addPlanet(parent: parent)
     }
     
-    
+    //Permet d'afficher les vies
     func AffichageLabel(label:SKLabelNode,text:String,fontS:Int,horAlign:SKLabelHorizontalAlignmentMode,xW: CGFloat,parent:GameScene){
         
         label.text = text
@@ -36,6 +38,7 @@ class Label{
         parent.addChild(label)
     }
     
+    //Phrase avant de commencer
     func phrasePreGame(parent:GameScene,label:SKLabelNode){
         tapToBeginLabel.text = "Appuyez pour commencer votre mission"
         tapToBeginLabel.fontSize = 80
@@ -46,6 +49,7 @@ class Label{
         parent.addChild(tapToBeginLabel)
     }
     
+    //Effet sur le nombre de vies lorsqu'on en perd une
     func LifeMultip(){
         let scaleUp = SKAction.scale(to: 1.5, duration: 0.2)
         let scaleDown = SKAction.scale(to: 1, duration: 0.2)

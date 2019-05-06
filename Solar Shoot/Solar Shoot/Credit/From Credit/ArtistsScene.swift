@@ -2,8 +2,8 @@
 //  ArtistsScene.swift
 //  Solar Shoot
 //
-//  Created by lucas abijmil on 09/04/2019.
-//  Copyright © 2019 Lucas Abijmil. All rights reserved.
+//  Created by Projet L2R1 on 09/04/2019.
+//  Copyright © 2019 Projet L2R1. All rights reserved.
 //
 
 import Foundation
@@ -34,10 +34,10 @@ class ArtistsScene: SKScene {
         print(musiqueActivee)
         //Permet de mettre la musique en fonction de si on l'a activer ou non
         if(musique.getMusiqueActivee()){
-            musique.playMusique()
+            musique.playMusique(NameMusique: "MusiqueOptionCredits")
         }
         else {
-            musique.stopMusique()
+            musique.stopMusique(NameMusique: "MusiqueOptionCredits")
         }
         
         //affichage du fond d'écran

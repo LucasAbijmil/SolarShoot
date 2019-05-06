@@ -2,8 +2,8 @@
 //  Asteroid.swift
 //  Solar Shoot
 //
-//  Created by Hanna on 08/04/2019.
-//  Copyright © 2019 Lucas Abijmil. All rights reserved.
+//  Created by Projet L2R1 on 08/04/2019.
+//  Copyright © 2019 Projet L2R1. All rights reserved.
 //
 
 import Foundation
@@ -12,15 +12,14 @@ import GameplayKit
 
 class Asteroides:SKSpriteNode {
     
+    //constructeur
     init(img:String){
         let texture = SKTexture(imageNamed: img)
         super.init(texture: texture, color: .clear, size: texture.size())
         self.name = "Asteroid"
         self.setScale(0.2)
-        //asteroid.position = start
         self.zPosition = 2
         self.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-        //asteroid.physicsBody = SKPhysicsBody(rectangleOf: asteroid.size)
         self.physicsBody = SKPhysicsBody(circleOfRadius: self.size.width/3.3, center: self.anchorPoint)
         self.physicsBody!.affectedByGravity = false
         self.physicsBody!.categoryBitMask = GameScene.physicsCategories.asteroid // Astéroid = 4 en binaire
@@ -42,7 +41,7 @@ class Asteroides:SKSpriteNode {
         return random() * (max - min) + min
     }
     
-    
+    //Ajouter des astéroides aléatoirement dans la GameScene
     func addAsteroid (parent: GameScene)  {
         
         let randomStart1 = random(min: self.size.height/2, max: parent.size.height - self.size.height/2)

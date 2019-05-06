@@ -6,6 +6,8 @@
 //  Copyright © 2019 projet-L2R1. All rights reserved.
 //
 
+//Classe qui permet d'afficher une planète différente à chaque niveau
+
 import Foundation
 import SpriteKit
 import GameplayKit
@@ -13,24 +15,22 @@ import GameplayKit
 
 class Planet:SKSpriteNode {
     
+    //constructeur
     init(imageName: String){
-        
         let texture = SKTexture(imageNamed : imageName)
         super.init(texture: texture, color: .clear, size: texture.size())
-        
-       /* self.physicsBody = SKPhysicsBody(circleOfRadius: self.size.width/2, center: self.anchorPoint) //planet.physicsBody = SKPhysicsBody(rectangleOf: planet.size) // déclaration du contouring de la planète, demandé au prof pour le typede SKphysics
-        self.physicsBody!.affectedByGravity = false // on désactive la gravité pour la planète
-        self.physicsBody!.categoryBitMask = GameScene.physicsCategories.planet
-        self.physicsBody!.collisionBitMask = GameScene.physicsCategories.none
-        self.physicsBody!.contactTestBitMask = GameScene.physicsCategories.asteroid*/
-        
     }
+
+        
+    
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    //Le PhysicsBody de chaque planète
     func phys(){
-        self.physicsBody = SKPhysicsBody(circleOfRadius: self.size.width/2, center: self.anchorPoint) //planet.physicsBody = SKPhysicsBody(rectangleOf: planet.size) // déclaration du contouring de la planète, demandé au prof pour le typede SKphysics
+        self.physicsBody = SKPhysicsBody(circleOfRadius: self.size.width/2, center: self.anchorPoint) // déclaration du contouring de la planète
         self.physicsBody!.affectedByGravity = false // on désactive la gravité pour la planète
         self.physicsBody!.categoryBitMask = GameScene.physicsCategories.planet
         self.physicsBody!.collisionBitMask = GameScene.physicsCategories.none
@@ -38,6 +38,7 @@ class Planet:SKSpriteNode {
         
     }
     
+    //Affichage 
    func addPlanet(parent: GameScene) {
         self.setScale(0.55)
         self.position = CGPoint(x: parent.size.width / 2, y: -self.size.height)
