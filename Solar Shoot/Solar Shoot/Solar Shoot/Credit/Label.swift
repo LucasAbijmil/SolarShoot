@@ -26,6 +26,13 @@ class Label{
         planetIcon.addPlanet(parent: parent)
     }
     
+    //Pour afficher les backgrounds différents pour chaque niveau
+    func afficherBackground(imageName: String, parent: GameScene,background: Background, j: Int){
+        parent.background1 = background
+        background.AffichageBack(imageName: imageName, i: j, parent: parent)
+        
+    }
+    
     //Permet d'afficher les vies
     func AffichageLabel(label:SKLabelNode,text:String,fontS:Int,horAlign:SKLabelHorizontalAlignmentMode,xW: CGFloat,parent:GameScene){
         

@@ -2,8 +2,8 @@
 //  Option.swift
 //  shooter
 //
-//  Created by Mehir bitan on 03/04/2019.
-//  Copyright © 2019 Dovratt bitan. All rights reserved.
+//  Created by Projet L2R1 on 03/04/2019.
+//  Copyright © 2019 Projet L2R1. All rights reserved.
 //
 import Foundation
 import SpriteKit

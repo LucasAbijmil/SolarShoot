@@ -14,8 +14,6 @@ class ExitScene: SKScene{
     private let repprendre = SKLabelNode(fontNamed :"Starjedi")
     private let restart = SKLabelNode(fontNamed :"Starjedi")
     private let menu = SKLabelNode(fontNamed :"Starjedi")
-    //let musique = Music(musiqueActivee: musiqueActivee)
-    
     
     //constructeur
     override init (size: CGSize) {

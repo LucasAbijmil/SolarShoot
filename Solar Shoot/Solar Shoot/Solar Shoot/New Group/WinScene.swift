@@ -2,8 +2,8 @@
 //  WinScene.swift
 //  shooter
 //
-//  Created by Mehir bitan on 08/04/2019.
-//  Copyright © 2019 Dovratt bitan. All rights reserved.
+//  Created by Projet-L2R1 on 08/04/2019.
+//  Copyright © 2019 Projet-L2R1. All rights reserved.
 //
 import Foundation
 import SpriteKit
@@ -29,7 +29,7 @@ class WinScene : SKScene {
     let Name = SKLabelNode(fontNamed :"Starjedi")
     let scoreLabel = SKLabelNode(fontNamed: "Starjedi")
     let defaults = UserDefaults()
-    let hightScoreLabel = SKLabelNode(fontNamed :"Starjedi")
+    let highScoreLabel = SKLabelNode(fontNamed :"Starjedi")
     let Bouton = SKLabelNode(fontNamed :"Starjedi")
     let Bouton1 = SKLabelNode(fontNamed :"Starjedi")
     
@@ -39,22 +39,88 @@ class WinScene : SKScene {
     override init (size: CGSize) {
         super.init(size: size)
         
+        //variables qui permettent d'avoir un meilleur score différent par niveau grace au UserDefaults qui permet d'initialiser par défaut la valeur du meilleur score à 0
+        var highScoreNumber1 = defaults.integer(forKey: "highScoreSaved1")
+        var highScoreNumber2 = defaults.integer(forKey: "highScoreSaved2")
+        var highScoreNumber3 = defaults.integer(forKey: "highScoreSaved3")
+        var highScoreNumber4 = defaults.integer(forKey: "highScoreSaved4")
+        var highScoreNumber5 = defaults.integer(forKey: "highScoreSaved5")
+        var highScoreNumber6 = defaults.integer(forKey: "highScoreSaved6")
+        var highScoreNumber7 = defaults.integer(forKey: "highScoreSaved7")
+        var highScoreNumber8 = defaults.integer(forKey: "highScoreSaved8")
+        
         //affichage du font d'écran
         endScene.position = CGPoint(x:self.size.width/2, y:self.size.height/2)
         endScene.zPosition = 0
         self.addChild(endScene)
         
-        affichageTexte(bouton: Name, text: "Niveau Réussi", fontS: 100, xW: 0.5, yH: 0.8)
-        
-        affichageTexte(bouton: scoreLabel, text: "Score : \(gameScoreString)", fontS: 100, xW: 0.5, yH: 0.6)
-        
-        var highScoreNumber = defaults.integer(forKey: "highScoreSaved")
-        if(gameScore > highScoreNumber) {
-            highScoreNumber = gameScore
-            defaults.set(highScoreNumber, forKey:"highScoreSaved")
+        switch lvlSelected {
+        case 1 :
+            if(gameScore > highScoreNumber1) {
+                highScoreNumber1 = gameScore
+                defaults.set(highScoreNumber1, forKey:"highScoreSaved1")
+            }
+            AffichageMeilleursScoreNiveau(highScoreNumber: highScoreNumber1)
+            break
+        case 2 :
+            if(gameScore > highScoreNumber2) {
+                highScoreNumber2 = gameScore
+                defaults.set(highScoreNumber2, forKey:"highScoreSaved2")
+            }
+            AffichageMeilleursScoreNiveau(highScoreNumber: highScoreNumber2)
+            break
+        case 3 :
+            if(gameScore > highScoreNumber3) {
+                highScoreNumber3 = gameScore
+                defaults.set(highScoreNumber3, forKey:"highScoreSaved3")
+            }
+            AffichageMeilleursScoreNiveau(highScoreNumber: highScoreNumber3)
+            break
+        case 4 :
+            if(gameScore > highScoreNumber4) {
+                highScoreNumber4 = gameScore
+                defaults.set(highScoreNumber4, forKey:"highScoreSaved4")
+            }
+            AffichageMeilleursScoreNiveau(highScoreNumber: highScoreNumber4)
+            break
+        case 5 :
+            if(gameScore > highScoreNumber5) {
+                highScoreNumber5 = gameScore
+                defaults.set(highScoreNumber5, forKey:"highScoreSaved5")
+            }
+            AffichageMeilleursScoreNiveau(highScoreNumber: highScoreNumber5)
+            break
+        case 6 :
+            if(gameScore > highScoreNumber6) {
+                highScoreNumber6 = gameScore
+                defaults.set(highScoreNumber6, forKey:"highScoreSaved6")
+            }
+            AffichageMeilleursScoreNiveau(highScoreNumber: highScoreNumber6)
+            break
+        case 7 :
+            if(gameScore > highScoreNumber7) {
+                highScoreNumber7 = gameScore
+                defaults.set(highScoreNumber7, forKey:"highScoreSaved7")
+            }
+            AffichageMeilleursScoreNiveau(highScoreNumber: highScoreNumber7)
+            break
+        case 8 :
+            if(gameScore > highScoreNumber8) {
+                highScoreNumber8 = gameScore
+                defaults.set(highScoreNumber8, forKey:"highScoreSaved8")
+            }
+            AffichageMeilleursScoreNiveau(highScoreNumber: highScoreNumber8)
+            break
+        default :
+            if(gameScore > highScoreNumber1) {
+                highScoreNumber1 = gameScore
+                defaults.set(highScoreNumber1, forKey:"highScoreSaved1")
+            }
+            AffichageMeilleursScoreNiveau(highScoreNumber: highScoreNumber1)
+            break
         }
-        let hightScoreString = highScoreNumber.formattedWithSeparatorGameOverScene
-        affichageTexte(bouton: hightScoreLabel, text: "Meilleur score : \(hightScoreString)", fontS: 60, xW: 0.5, yH: 0.5)
+        
+        affichageTexte(bouton: Name, text: "Niveau Réussi", fontS: 100, xW: 0.5, yH: 0.8)
         
         affichageTexte(bouton: Bouton, text: "Carte", fontS: 100, xW: 0.5, yH: 0.4)
         Bouton.name = "bouton"
@@ -62,10 +128,17 @@ class WinScene : SKScene {
         affichageTexte(bouton: Bouton1, text: "Menu", fontS: 100, xW: 0.5, yH: 0.3)
         Bouton1.name = "bouton1"
     }
-    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    //fonction qui permet d'afficher le meilleur score et le score pour chaque niveau
+    func AffichageMeilleursScoreNiveau(highScoreNumber: Int){
+        let highScoreString = highScoreNumber.formattedWithSeparatorGameOverScene
+        affichageTexte(bouton: scoreLabel, text: "Score : \(gameScoreString)", fontS: 100, xW: 0.5, yH: 0.6)
+        affichageTexte(bouton: highScoreLabel, text: "Meilleur score : \(highScoreString)", fontS: 60, xW: 0.5, yH: 0.5)
+    }
+    
     func affichageTexte(bouton: SKLabelNode, text: String, fontS: Int, xW: CGFloat, yH: CGFloat){
         bouton.text = text
         bouton.fontSize = CGFloat(fontS)
